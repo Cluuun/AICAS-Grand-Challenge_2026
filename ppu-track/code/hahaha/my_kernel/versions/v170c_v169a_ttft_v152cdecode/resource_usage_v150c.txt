@@ -1,0 +1,50 @@
+
+Fatbin elf code:
+================
+arch = sm_80
+code version = [1,7]
+host = linux
+compile_size = 64bit
+
+Resource usage:
+ Common:
+  GLOBAL:0
+ Function _Z15ldg_update_stepPKiPiS1_S1_S1_S1_i:
+  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:404 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z18ldg_lm_head_phase2PKfPKiPiiS2_:
+  REG:12 STACK:0 SHARED:8192 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z18ldg_lm_head_phase1PKfPK6__halfPfPiPKi:
+  REG:36 STACK:0 SHARED:8256 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z18ldg_lm_head_logitsPKfPK6__halfPf:
+  REG:38 STACK:0 SHARED:8192 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z17ldg_decode_kerneliPK6__halfPK15LDGLayerWeightsS1_S1_S1_PS_S5_S5_PfS6_S6_S6_S6_S6_S6_S6_S6_S6_S6_iiiPKiS8_S8_ifPmPjSA_SA_SA_:
+  REG:80 STACK:24 SHARED:36160 LOCAL:0 CONSTANT[2]:8 CONSTANT[0]:600 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+Fatbin ptx code:
+================
+arch = sm_80
+code version = [8,7]
+host = linux
+compile_size = 64bit
+compressed
+ptxasOptions = -v  
+
+Fatbin elf code:
+================
+arch = sm_80
+code version = [1,7]
+host = linux
+compile_size = 64bit
+
+Resource usage:
+ Common:
+  GLOBAL:0
+
+Fatbin ptx code:
+================
+arch = sm_80
+code version = [8,7]
+host = linux
+compile_size = 64bit
+compressed
+ptxasOptions = -v  

@@ -1,0 +1,6 @@
+{
+    "int4_layers": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    "description": "Middle layers (7-23) upgraded to INT4 for decode throughput. These layers are fully skipped in tail phase (step 73+), and MLP-skipped in mid phase (step 35+). INT4 reduces memory bandwidth by ~50% for these layers during main graph phase.",
+    "max_rel_err": 0.05,
+    "source": "sensitivity-based: layers 7-23 are safe to full-skip, therefore safe for INT4"
+}

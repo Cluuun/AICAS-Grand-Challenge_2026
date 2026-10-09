@@ -1,0 +1,9 @@
+{
+  "visual_graph_family": {
+    "start": 16,
+    "stop": 64,
+    "step": 2,
+    "major_dim": 64,
+    "anchor_dim": 48
+  }
+}

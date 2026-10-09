@@ -1,0 +1,14 @@
+--index-url https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/cu129/simple/
+# AICAS 2026 - 环境依赖
+# ============================================
+
+# 核心框架
+transformers==5.3.0
+accelerate==1.12.0
+
+# 数据处理
+datasets==4.6.1
+Pillow>=9.0.0
+
+
+

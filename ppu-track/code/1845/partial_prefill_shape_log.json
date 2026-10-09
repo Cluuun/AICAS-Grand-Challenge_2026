@@ -1,0 +1,2702 @@
+[
+  {
+    "sample_idx": 0,
+    "question_id": 34602,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 1,
+    "question_id": 34603,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 2,
+    "question_id": 34604,
+    "cache_kind": "image",
+    "prompt_len": 1041,
+    "attention_len": 1041,
+    "remaining_len": 13,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1041,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 3,
+    "question_id": 34605,
+    "cache_kind": "image",
+    "prompt_len": 594,
+    "attention_len": 594,
+    "remaining_len": 14,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 594,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      36,
+      64
+    ]
+  },
+  {
+    "sample_idx": 4,
+    "question_id": 34606,
+    "cache_kind": "image",
+    "prompt_len": 597,
+    "attention_len": 597,
+    "remaining_len": 17,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 597,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      36,
+      64
+    ]
+  },
+  {
+    "sample_idx": 5,
+    "question_id": 34607,
+    "cache_kind": "image",
+    "prompt_len": 691,
+    "attention_len": 691,
+    "remaining_len": 15,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 691,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 6,
+    "question_id": 34608,
+    "cache_kind": "image",
+    "prompt_len": 751,
+    "attention_len": 751,
+    "remaining_len": 11,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 751,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      46,
+      64
+    ]
+  },
+  {
+    "sample_idx": 7,
+    "question_id": 34609,
+    "cache_kind": "image",
+    "prompt_len": 753,
+    "attention_len": 753,
+    "remaining_len": 13,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 753,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      46,
+      64
+    ]
+  },
+  {
+    "sample_idx": 8,
+    "question_id": 34610,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 9,
+    "question_id": 34611,
+    "cache_kind": "image",
+    "prompt_len": 687,
+    "attention_len": 687,
+    "remaining_len": 11,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 687,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 10,
+    "question_id": 34612,
+    "cache_kind": "image",
+    "prompt_len": 689,
+    "attention_len": 689,
+    "remaining_len": 13,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 689,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 11,
+    "question_id": 34613,
+    "cache_kind": "image",
+    "prompt_len": 788,
+    "attention_len": 788,
+    "remaining_len": 16,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 788,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 12,
+    "question_id": 34614,
+    "cache_kind": "image",
+    "prompt_len": 695,
+    "attention_len": 695,
+    "remaining_len": 19,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 695,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 13,
+    "question_id": 34615,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 14,
+    "question_id": 34616,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 15,
+    "question_id": 34617,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 16,
+    "question_id": 34618,
+    "cache_kind": "image",
+    "prompt_len": 691,
+    "attention_len": 691,
+    "remaining_len": 15,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 691,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 17,
+    "question_id": 34619,
+    "cache_kind": "image",
+    "prompt_len": 691,
+    "attention_len": 691,
+    "remaining_len": 15,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 691,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 18,
+    "question_id": 34620,
+    "cache_kind": "image",
+    "prompt_len": 1044,
+    "attention_len": 1044,
+    "remaining_len": 16,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1044,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 19,
+    "question_id": 34621,
+    "cache_kind": "image",
+    "prompt_len": 1044,
+    "attention_len": 1044,
+    "remaining_len": 16,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1044,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 20,
+    "question_id": 34622,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 21,
+    "question_id": 34623,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 22,
+    "question_id": 34624,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 23,
+    "question_id": 34625,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 24,
+    "question_id": 34626,
+    "cache_kind": "image",
+    "prompt_len": 792,
+    "attention_len": 792,
+    "remaining_len": 20,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 792,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 25,
+    "question_id": 34627,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 26,
+    "question_id": 34628,
+    "cache_kind": "image",
+    "prompt_len": 853,
+    "attention_len": 853,
+    "remaining_len": 17,
+    "past_len": 836,
+    "cache_position_start": 836,
+    "cache_position_end": 853,
+    "image_start": 4,
+    "image_end": 836,
+    "image_grid_thw": [
+      1,
+      52,
+      64
+    ]
+  },
+  {
+    "sample_idx": 27,
+    "question_id": 34629,
+    "cache_kind": "image",
+    "prompt_len": 848,
+    "attention_len": 848,
+    "remaining_len": 12,
+    "past_len": 836,
+    "cache_position_start": 836,
+    "cache_position_end": 848,
+    "image_start": 4,
+    "image_end": 836,
+    "image_grid_thw": [
+      1,
+      52,
+      64
+    ]
+  },
+  {
+    "sample_idx": 28,
+    "question_id": 34630,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 29,
+    "question_id": 34631,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 30,
+    "question_id": 34632,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 31,
+    "question_id": 34633,
+    "cache_kind": "image",
+    "prompt_len": 1009,
+    "attention_len": 1009,
+    "remaining_len": 13,
+    "past_len": 996,
+    "cache_position_start": 996,
+    "cache_position_end": 1009,
+    "image_start": 4,
+    "image_end": 996,
+    "image_grid_thw": [
+      1,
+      62,
+      64
+    ]
+  },
+  {
+    "sample_idx": 32,
+    "question_id": 34634,
+    "cache_kind": "image",
+    "prompt_len": 783,
+    "attention_len": 783,
+    "remaining_len": 11,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 783,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 33,
+    "question_id": 34635,
+    "cache_kind": "image",
+    "prompt_len": 591,
+    "attention_len": 591,
+    "remaining_len": 11,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 591,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      36,
+      64
+    ]
+  },
+  {
+    "sample_idx": 34,
+    "question_id": 34636,
+    "cache_kind": "image",
+    "prompt_len": 594,
+    "attention_len": 594,
+    "remaining_len": 14,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 594,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      36,
+      64
+    ]
+  },
+  {
+    "sample_idx": 35,
+    "question_id": 34637,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 36,
+    "question_id": 34638,
+    "cache_kind": "image",
+    "prompt_len": 726,
+    "attention_len": 726,
+    "remaining_len": 18,
+    "past_len": 708,
+    "cache_position_start": 708,
+    "cache_position_end": 726,
+    "image_start": 4,
+    "image_end": 708,
+    "image_grid_thw": [
+      1,
+      44,
+      64
+    ]
+  },
+  {
+    "sample_idx": 37,
+    "question_id": 34639,
+    "cache_kind": "image",
+    "prompt_len": 719,
+    "attention_len": 719,
+    "remaining_len": 11,
+    "past_len": 708,
+    "cache_position_start": 708,
+    "cache_position_end": 719,
+    "image_start": 4,
+    "image_end": 708,
+    "image_grid_thw": [
+      1,
+      44,
+      64
+    ]
+  },
+  {
+    "sample_idx": 38,
+    "question_id": 34640,
+    "cache_kind": "image",
+    "prompt_len": 722,
+    "attention_len": 722,
+    "remaining_len": 14,
+    "past_len": 708,
+    "cache_position_start": 708,
+    "cache_position_end": 722,
+    "image_start": 4,
+    "image_end": 708,
+    "image_grid_thw": [
+      1,
+      44,
+      64
+    ]
+  },
+  {
+    "sample_idx": 39,
+    "question_id": 34641,
+    "cache_kind": "image",
+    "prompt_len": 695,
+    "attention_len": 695,
+    "remaining_len": 19,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 695,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 40,
+    "question_id": 34642,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 41,
+    "question_id": 34643,
+    "cache_kind": "image",
+    "prompt_len": 789,
+    "attention_len": 789,
+    "remaining_len": 17,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 789,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 42,
+    "question_id": 34644,
+    "cache_kind": "image",
+    "prompt_len": 790,
+    "attention_len": 790,
+    "remaining_len": 18,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 790,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 43,
+    "question_id": 34645,
+    "cache_kind": "image",
+    "prompt_len": 497,
+    "attention_len": 497,
+    "remaining_len": 13,
+    "past_len": 484,
+    "cache_position_start": 484,
+    "cache_position_end": 497,
+    "image_start": 4,
+    "image_end": 484,
+    "image_grid_thw": [
+      1,
+      64,
+      30
+    ]
+  },
+  {
+    "sample_idx": 44,
+    "question_id": 34646,
+    "cache_kind": "image",
+    "prompt_len": 498,
+    "attention_len": 498,
+    "remaining_len": 14,
+    "past_len": 484,
+    "cache_position_start": 484,
+    "cache_position_end": 498,
+    "image_start": 4,
+    "image_end": 484,
+    "image_grid_thw": [
+      1,
+      64,
+      30
+    ]
+  },
+  {
+    "sample_idx": 45,
+    "question_id": 34647,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 46,
+    "question_id": 34648,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 47,
+    "question_id": 34649,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 48,
+    "question_id": 34650,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 49,
+    "question_id": 34651,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 50,
+    "question_id": 34652,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 51,
+    "question_id": 34653,
+    "cache_kind": "image",
+    "prompt_len": 916,
+    "attention_len": 916,
+    "remaining_len": 16,
+    "past_len": 900,
+    "cache_position_start": 900,
+    "cache_position_end": 916,
+    "image_start": 4,
+    "image_end": 900,
+    "image_grid_thw": [
+      1,
+      64,
+      56
+    ]
+  },
+  {
+    "sample_idx": 52,
+    "question_id": 34654,
+    "cache_kind": "image",
+    "prompt_len": 917,
+    "attention_len": 917,
+    "remaining_len": 17,
+    "past_len": 900,
+    "cache_position_start": 900,
+    "cache_position_end": 917,
+    "image_start": 4,
+    "image_end": 900,
+    "image_grid_thw": [
+      1,
+      64,
+      56
+    ]
+  },
+  {
+    "sample_idx": 53,
+    "question_id": 34655,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 54,
+    "question_id": 34656,
+    "cache_kind": "image",
+    "prompt_len": 689,
+    "attention_len": 689,
+    "remaining_len": 13,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 689,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 55,
+    "question_id": 34657,
+    "cache_kind": "image",
+    "prompt_len": 1043,
+    "attention_len": 1043,
+    "remaining_len": 15,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1043,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 56,
+    "question_id": 34658,
+    "cache_kind": "image",
+    "prompt_len": 755,
+    "attention_len": 755,
+    "remaining_len": 15,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 755,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      46,
+      64
+    ]
+  },
+  {
+    "sample_idx": 57,
+    "question_id": 34659,
+    "cache_kind": "image",
+    "prompt_len": 758,
+    "attention_len": 758,
+    "remaining_len": 18,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 758,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      46,
+      64
+    ]
+  },
+  {
+    "sample_idx": 58,
+    "question_id": 34660,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 59,
+    "question_id": 34661,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 60,
+    "question_id": 34662,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 61,
+    "question_id": 34663,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 62,
+    "question_id": 34664,
+    "cache_kind": "image",
+    "prompt_len": 818,
+    "attention_len": 818,
+    "remaining_len": 14,
+    "past_len": 804,
+    "cache_position_start": 804,
+    "cache_position_end": 818,
+    "image_start": 4,
+    "image_end": 804,
+    "image_grid_thw": [
+      1,
+      50,
+      64
+    ]
+  },
+  {
+    "sample_idx": 63,
+    "question_id": 34665,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 64,
+    "question_id": 34666,
+    "cache_kind": "image",
+    "prompt_len": 792,
+    "attention_len": 792,
+    "remaining_len": 20,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 792,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 65,
+    "question_id": 34667,
+    "cache_kind": "image",
+    "prompt_len": 1042,
+    "attention_len": 1042,
+    "remaining_len": 14,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1042,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 66,
+    "question_id": 34668,
+    "cache_kind": "image",
+    "prompt_len": 1045,
+    "attention_len": 1045,
+    "remaining_len": 17,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1045,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 67,
+    "question_id": 34669,
+    "cache_kind": "image",
+    "prompt_len": 687,
+    "attention_len": 687,
+    "remaining_len": 11,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 687,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 68,
+    "question_id": 34670,
+    "cache_kind": "image",
+    "prompt_len": 689,
+    "attention_len": 689,
+    "remaining_len": 13,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 689,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 69,
+    "question_id": 34671,
+    "cache_kind": "image",
+    "prompt_len": 783,
+    "attention_len": 783,
+    "remaining_len": 11,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 783,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 70,
+    "question_id": 34672,
+    "cache_kind": "image",
+    "prompt_len": 788,
+    "attention_len": 788,
+    "remaining_len": 16,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 788,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 71,
+    "question_id": 34673,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 72,
+    "question_id": 34674,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 73,
+    "question_id": 34675,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 74,
+    "question_id": 34676,
+    "cache_kind": "image",
+    "prompt_len": 794,
+    "attention_len": 794,
+    "remaining_len": 22,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 794,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 75,
+    "question_id": 34677,
+    "cache_kind": "image",
+    "prompt_len": 528,
+    "attention_len": 528,
+    "remaining_len": 12,
+    "past_len": 516,
+    "cache_position_start": 516,
+    "cache_position_end": 528,
+    "image_start": 4,
+    "image_end": 516,
+    "image_grid_thw": [
+      1,
+      32,
+      64
+    ]
+  },
+  {
+    "sample_idx": 76,
+    "question_id": 34678,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 77,
+    "question_id": 34679,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 78,
+    "question_id": 34680,
+    "cache_kind": "image",
+    "prompt_len": 592,
+    "attention_len": 592,
+    "remaining_len": 12,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 592,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      64,
+      36
+    ]
+  },
+  {
+    "sample_idx": 79,
+    "question_id": 34681,
+    "cache_kind": "image",
+    "prompt_len": 594,
+    "attention_len": 594,
+    "remaining_len": 14,
+    "past_len": 580,
+    "cache_position_start": 580,
+    "cache_position_end": 594,
+    "image_start": 4,
+    "image_end": 580,
+    "image_grid_thw": [
+      1,
+      64,
+      36
+    ]
+  },
+  {
+    "sample_idx": 80,
+    "question_id": 34682,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 81,
+    "question_id": 34683,
+    "cache_kind": "image",
+    "prompt_len": 696,
+    "attention_len": 696,
+    "remaining_len": 20,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 696,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 82,
+    "question_id": 34684,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 83,
+    "question_id": 34685,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 84,
+    "question_id": 34686,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 85,
+    "question_id": 34687,
+    "cache_kind": "image",
+    "prompt_len": 790,
+    "attention_len": 790,
+    "remaining_len": 18,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 790,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 86,
+    "question_id": 34688,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 87,
+    "question_id": 34689,
+    "cache_kind": "image",
+    "prompt_len": 789,
+    "attention_len": 789,
+    "remaining_len": 17,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 789,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 88,
+    "question_id": 34690,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 89,
+    "question_id": 34691,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 90,
+    "question_id": 34692,
+    "cache_kind": "image",
+    "prompt_len": 687,
+    "attention_len": 687,
+    "remaining_len": 11,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 687,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 91,
+    "question_id": 34693,
+    "cache_kind": "image",
+    "prompt_len": 792,
+    "attention_len": 792,
+    "remaining_len": 20,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 792,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 92,
+    "question_id": 34694,
+    "cache_kind": "image",
+    "prompt_len": 793,
+    "attention_len": 793,
+    "remaining_len": 21,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 793,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 93,
+    "question_id": 34695,
+    "cache_kind": "image",
+    "prompt_len": 1011,
+    "attention_len": 1011,
+    "remaining_len": 15,
+    "past_len": 996,
+    "cache_position_start": 996,
+    "cache_position_end": 1011,
+    "image_start": 4,
+    "image_end": 996,
+    "image_grid_thw": [
+      1,
+      62,
+      64
+    ]
+  },
+  {
+    "sample_idx": 94,
+    "question_id": 34696,
+    "cache_kind": "image",
+    "prompt_len": 1010,
+    "attention_len": 1010,
+    "remaining_len": 14,
+    "past_len": 996,
+    "cache_position_start": 996,
+    "cache_position_end": 1010,
+    "image_start": 4,
+    "image_end": 996,
+    "image_grid_thw": [
+      1,
+      62,
+      64
+    ]
+  },
+  {
+    "sample_idx": 95,
+    "question_id": 34697,
+    "cache_kind": "image",
+    "prompt_len": 691,
+    "attention_len": 691,
+    "remaining_len": 15,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 691,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 96,
+    "question_id": 34698,
+    "cache_kind": "image",
+    "prompt_len": 754,
+    "attention_len": 754,
+    "remaining_len": 14,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 754,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      64,
+      46
+    ]
+  },
+  {
+    "sample_idx": 97,
+    "question_id": 34699,
+    "cache_kind": "image",
+    "prompt_len": 758,
+    "attention_len": 758,
+    "remaining_len": 18,
+    "past_len": 740,
+    "cache_position_start": 740,
+    "cache_position_end": 758,
+    "image_start": 4,
+    "image_end": 740,
+    "image_grid_thw": [
+      1,
+      64,
+      46
+    ]
+  },
+  {
+    "sample_idx": 98,
+    "question_id": 34700,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 99,
+    "question_id": 34701,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 100,
+    "question_id": 34702,
+    "cache_kind": "image",
+    "prompt_len": 792,
+    "attention_len": 792,
+    "remaining_len": 20,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 792,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 101,
+    "question_id": 34703,
+    "cache_kind": "image",
+    "prompt_len": 783,
+    "attention_len": 783,
+    "remaining_len": 11,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 783,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 102,
+    "question_id": 34704,
+    "cache_kind": "image",
+    "prompt_len": 688,
+    "attention_len": 688,
+    "remaining_len": 12,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 688,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 103,
+    "question_id": 34705,
+    "cache_kind": "image",
+    "prompt_len": 690,
+    "attention_len": 690,
+    "remaining_len": 14,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 690,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 104,
+    "question_id": 34706,
+    "cache_kind": "image",
+    "prompt_len": 657,
+    "attention_len": 657,
+    "remaining_len": 13,
+    "past_len": 644,
+    "cache_position_start": 644,
+    "cache_position_end": 657,
+    "image_start": 4,
+    "image_end": 644,
+    "image_grid_thw": [
+      1,
+      40,
+      64
+    ]
+  },
+  {
+    "sample_idx": 105,
+    "question_id": 34707,
+    "cache_kind": "image",
+    "prompt_len": 820,
+    "attention_len": 820,
+    "remaining_len": 16,
+    "past_len": 804,
+    "cache_position_start": 804,
+    "cache_position_end": 820,
+    "image_start": 4,
+    "image_end": 804,
+    "image_grid_thw": [
+      1,
+      50,
+      64
+    ]
+  },
+  {
+    "sample_idx": 106,
+    "question_id": 34708,
+    "cache_kind": "image",
+    "prompt_len": 821,
+    "attention_len": 821,
+    "remaining_len": 17,
+    "past_len": 804,
+    "cache_position_start": 804,
+    "cache_position_end": 821,
+    "image_start": 4,
+    "image_end": 804,
+    "image_grid_thw": [
+      1,
+      50,
+      64
+    ]
+  },
+  {
+    "sample_idx": 107,
+    "question_id": 34709,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 108,
+    "question_id": 34710,
+    "cache_kind": "image",
+    "prompt_len": 1042,
+    "attention_len": 1042,
+    "remaining_len": 14,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1042,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 109,
+    "question_id": 34711,
+    "cache_kind": "image",
+    "prompt_len": 1043,
+    "attention_len": 1043,
+    "remaining_len": 15,
+    "past_len": 1028,
+    "cache_position_start": 1028,
+    "cache_position_end": 1043,
+    "image_start": 4,
+    "image_end": 1028,
+    "image_grid_thw": [
+      1,
+      64,
+      64
+    ]
+  },
+  {
+    "sample_idx": 110,
+    "question_id": 34712,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 111,
+    "question_id": 34713,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 112,
+    "question_id": 34714,
+    "cache_kind": "image",
+    "prompt_len": 689,
+    "attention_len": 689,
+    "remaining_len": 13,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 689,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 113,
+    "question_id": 34715,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 114,
+    "question_id": 34716,
+    "cache_kind": "image",
+    "prompt_len": 658,
+    "attention_len": 658,
+    "remaining_len": 14,
+    "past_len": 644,
+    "cache_position_start": 644,
+    "cache_position_end": 658,
+    "image_start": 4,
+    "image_end": 644,
+    "image_grid_thw": [
+      1,
+      64,
+      40
+    ]
+  },
+  {
+    "sample_idx": 115,
+    "question_id": 34717,
+    "cache_kind": "image",
+    "prompt_len": 658,
+    "attention_len": 658,
+    "remaining_len": 14,
+    "past_len": 644,
+    "cache_position_start": 644,
+    "cache_position_end": 658,
+    "image_start": 4,
+    "image_end": 644,
+    "image_grid_thw": [
+      1,
+      64,
+      40
+    ]
+  },
+  {
+    "sample_idx": 116,
+    "question_id": 34718,
+    "cache_kind": "image",
+    "prompt_len": 657,
+    "attention_len": 657,
+    "remaining_len": 13,
+    "past_len": 644,
+    "cache_position_start": 644,
+    "cache_position_end": 657,
+    "image_start": 4,
+    "image_end": 644,
+    "image_grid_thw": [
+      1,
+      40,
+      64
+    ]
+  },
+  {
+    "sample_idx": 117,
+    "question_id": 34719,
+    "cache_kind": "image",
+    "prompt_len": 788,
+    "attention_len": 788,
+    "remaining_len": 16,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 788,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 118,
+    "question_id": 34720,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 119,
+    "question_id": 34721,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 120,
+    "question_id": 34722,
+    "cache_kind": "image",
+    "prompt_len": 783,
+    "attention_len": 783,
+    "remaining_len": 11,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 783,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 121,
+    "question_id": 34723,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 122,
+    "question_id": 34724,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 123,
+    "question_id": 34725,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 124,
+    "question_id": 34726,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 125,
+    "question_id": 34727,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 126,
+    "question_id": 34728,
+    "cache_kind": "image",
+    "prompt_len": 723,
+    "attention_len": 723,
+    "remaining_len": 15,
+    "past_len": 708,
+    "cache_position_start": 708,
+    "cache_position_end": 723,
+    "image_start": 4,
+    "image_end": 708,
+    "image_grid_thw": [
+      1,
+      44,
+      64
+    ]
+  },
+  {
+    "sample_idx": 127,
+    "question_id": 34729,
+    "cache_kind": "image",
+    "prompt_len": 719,
+    "attention_len": 719,
+    "remaining_len": 11,
+    "past_len": 708,
+    "cache_position_start": 708,
+    "cache_position_end": 719,
+    "image_start": 4,
+    "image_end": 708,
+    "image_grid_thw": [
+      1,
+      44,
+      64
+    ]
+  },
+  {
+    "sample_idx": 128,
+    "question_id": 34730,
+    "cache_kind": "image",
+    "prompt_len": 1012,
+    "attention_len": 1012,
+    "remaining_len": 16,
+    "past_len": 996,
+    "cache_position_start": 996,
+    "cache_position_end": 1012,
+    "image_start": 4,
+    "image_end": 996,
+    "image_grid_thw": [
+      1,
+      62,
+      64
+    ]
+  },
+  {
+    "sample_idx": 129,
+    "question_id": 34731,
+    "cache_kind": "image",
+    "prompt_len": 1008,
+    "attention_len": 1008,
+    "remaining_len": 12,
+    "past_len": 996,
+    "cache_position_start": 996,
+    "cache_position_end": 1008,
+    "image_start": 4,
+    "image_end": 996,
+    "image_grid_thw": [
+      1,
+      62,
+      64
+    ]
+  },
+  {
+    "sample_idx": 130,
+    "question_id": 34732,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 131,
+    "question_id": 34733,
+    "cache_kind": "image",
+    "prompt_len": 695,
+    "attention_len": 695,
+    "remaining_len": 19,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 695,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 132,
+    "question_id": 34734,
+    "cache_kind": "image",
+    "prompt_len": 916,
+    "attention_len": 916,
+    "remaining_len": 16,
+    "past_len": 900,
+    "cache_position_start": 900,
+    "cache_position_end": 916,
+    "image_start": 4,
+    "image_end": 900,
+    "image_grid_thw": [
+      1,
+      64,
+      56
+    ]
+  },
+  {
+    "sample_idx": 133,
+    "question_id": 34735,
+    "cache_kind": "image",
+    "prompt_len": 916,
+    "attention_len": 916,
+    "remaining_len": 16,
+    "past_len": 900,
+    "cache_position_start": 900,
+    "cache_position_end": 916,
+    "image_start": 4,
+    "image_end": 900,
+    "image_grid_thw": [
+      1,
+      64,
+      56
+    ]
+  },
+  {
+    "sample_idx": 134,
+    "question_id": 34736,
+    "cache_kind": "image",
+    "prompt_len": 782,
+    "attention_len": 782,
+    "remaining_len": 10,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 782,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 135,
+    "question_id": 34737,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 136,
+    "question_id": 34738,
+    "cache_kind": "image",
+    "prompt_len": 795,
+    "attention_len": 795,
+    "remaining_len": 23,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 795,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 137,
+    "question_id": 34739,
+    "cache_kind": "image",
+    "prompt_len": 788,
+    "attention_len": 788,
+    "remaining_len": 16,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 788,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 138,
+    "question_id": 34740,
+    "cache_kind": "image",
+    "prompt_len": 818,
+    "attention_len": 818,
+    "remaining_len": 14,
+    "past_len": 804,
+    "cache_position_start": 804,
+    "cache_position_end": 818,
+    "image_start": 4,
+    "image_end": 804,
+    "image_grid_thw": [
+      1,
+      64,
+      50
+    ]
+  },
+  {
+    "sample_idx": 139,
+    "question_id": 34741,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 140,
+    "question_id": 34742,
+    "cache_kind": "image",
+    "prompt_len": 785,
+    "attention_len": 785,
+    "remaining_len": 13,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 785,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 141,
+    "question_id": 34743,
+    "cache_kind": "image",
+    "prompt_len": 787,
+    "attention_len": 787,
+    "remaining_len": 15,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 787,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 142,
+    "question_id": 34744,
+    "cache_kind": "image",
+    "prompt_len": 784,
+    "attention_len": 784,
+    "remaining_len": 12,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 784,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 143,
+    "question_id": 34745,
+    "cache_kind": "image",
+    "prompt_len": 788,
+    "attention_len": 788,
+    "remaining_len": 16,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 788,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      64,
+      48
+    ]
+  },
+  {
+    "sample_idx": 144,
+    "question_id": 34746,
+    "cache_kind": "image",
+    "prompt_len": 689,
+    "attention_len": 689,
+    "remaining_len": 13,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 689,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 145,
+    "question_id": 34747,
+    "cache_kind": "image",
+    "prompt_len": 692,
+    "attention_len": 692,
+    "remaining_len": 16,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 692,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      64,
+      42
+    ]
+  },
+  {
+    "sample_idx": 146,
+    "question_id": 34748,
+    "cache_kind": "image",
+    "prompt_len": 625,
+    "attention_len": 625,
+    "remaining_len": 13,
+    "past_len": 612,
+    "cache_position_start": 612,
+    "cache_position_end": 625,
+    "image_start": 4,
+    "image_end": 612,
+    "image_grid_thw": [
+      1,
+      38,
+      64
+    ]
+  },
+  {
+    "sample_idx": 147,
+    "question_id": 34749,
+    "cache_kind": "image",
+    "prompt_len": 786,
+    "attention_len": 786,
+    "remaining_len": 14,
+    "past_len": 772,
+    "cache_position_start": 772,
+    "cache_position_end": 786,
+    "image_start": 4,
+    "image_end": 772,
+    "image_grid_thw": [
+      1,
+      48,
+      64
+    ]
+  },
+  {
+    "sample_idx": 148,
+    "question_id": 34750,
+    "cache_kind": "image",
+    "prompt_len": 688,
+    "attention_len": 688,
+    "remaining_len": 12,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 688,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  },
+  {
+    "sample_idx": 149,
+    "question_id": 34751,
+    "cache_kind": "image",
+    "prompt_len": 693,
+    "attention_len": 693,
+    "remaining_len": 17,
+    "past_len": 676,
+    "cache_position_start": 676,
+    "cache_position_end": 693,
+    "image_start": 4,
+    "image_end": 676,
+    "image_grid_thw": [
+      1,
+      42,
+      64
+    ]
+  }
+]

@@ -1,0 +1,1188 @@
+import os
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from collections.abc import Callable
+from contextlib import nullcontext
+from transformers.models.qwen3_vl.configuration_qwen3_vl import (
+    Qwen3VLTextConfig,
+)
+from transformers.activations import ACT2FN
+from transformers.modeling_layers import GradientCheckpointingLayer
+import math
+from transformers.modeling_rope_utils import ROPE_INIT_FUNCTIONS
+from typing import Optional
+from aicas2026gc import RuntimeAutotuner
+from transformers.cache_utils import Cache
+from aicas2026gc.ops.rms_norm import fused_1d_rmsnorm
+from aicas2026gc.ops.rope import _launch_k_rope_to_cache
+from aicas2026gc.ops import algebra_prep_qkv_and_cache
+from aicas2026gc.ops.algebra_split_k_decode import algebra_split_k_decode_cudagraph
+from aicas2026gc.ops.swiglu import fused_swiglu_decode, fused_swiglu_prefill
+from flash_attn import flash_attn_func
+from aicas2026gc.ops import (
+    gate_up_gemv_sk4,
+    o_gemv_sk32_fp16,
+)
+from transformers.utils.output_capturing import capture_outputs
+from transformers.utils import (
+    TransformersKwargs,
+    auto_docstring,
+)
+
+from transformers.processing_utils import Unpack
+
+from .basemodel import Qwen3VLPreTrainedModel, BaseModelOutputWithPast
+from .const import (
+    QWEN3VL_TEXT_ATTENTION_DECODE_RMS_MEAN,
+    QWEN3VL_TEXT_MLP_DECODE_RMS_MEAN,
+)
+from .layer_stats import maybe_create_layer_stats_collector
+
+
+def maybe_autocast(
+    device_type: str,
+    dtype=None,
+    enabled: bool = True,
+    cache_enabled: bool | None = None,
+):
+    """
+    Context manager that only autocasts if:
+
+    - `autocast` is already enabled in this context
+    - Or this call to `maybe_autocast` has `enabled=True`
+
+    This prevents `autocast` being added to the graph when it is effectively a no-op.
+    Which makes graph splitting in `torch.compile` more flexible as it removes the
+    requirement that partition IDs be monotonically increasing.
+    """
+    if torch.is_autocast_enabled(device_type) or enabled:
+        return torch.autocast(device_type, dtype=dtype, enabled=enabled, cache_enabled=cache_enabled)
+    else:
+        return nullcontext()
+
+
+def _parse_layer_set(value: str, num_layers: int) -> set[int]:
+    if not value.strip():
+        return set()
+    layers = set()
+    for item in value.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        layer_idx = int(item)
+        if not (0 <= layer_idx < num_layers):
+            raise ValueError(f"decode skip layer must be in [0, {num_layers}), got {layer_idx}")
+        layers.add(layer_idx)
+    return layers
+
+
+class Qwen3VLTextRotaryEmbedding(nn.Module):
+    inv_freq: torch.Tensor  # fix linting for `register_buffer`
+
+    def __init__(self, config: Qwen3VLTextConfig, device=None):
+        super().__init__()
+        self.max_seq_len_cached = config.max_position_embeddings
+        self.original_max_seq_len = config.max_position_embeddings
+
+        self.config = config
+
+        self.rope_type = self.config.rope_parameters["rope_type"]
+        rope_init_fn: Callable = self.compute_default_rope_parameters
+        if self.rope_type != "default":
+            rope_init_fn = ROPE_INIT_FUNCTIONS[self.rope_type]
+        inv_freq, self.attention_scaling = rope_init_fn(self.config, device)
+
+        self.register_buffer("inv_freq", inv_freq, persistent=False)  # [64]
+        self.register_buffer("original_inv_freq", inv_freq.clone(), persistent=False)
+
+        self.mrope_section = config.rope_parameters.get("mrope_section", [24, 20, 20])
+
+        # Runtime auto-tuner for RoPE kernel selection (shared across instances)
+        self.rope_tuner = RuntimeAutotuner(name=self.__class__.__name__, fallback="table", strict=True)
+
+    def post_register_buffer(self):
+        # WOC, WOC, WOC 这个图片的 position embedding 其实没有屁的作用????
+        # 在 __init__ 中执行中执行 self.post_register_buffer() self.mrope_indices 全是 0 !!!!!!!!!!!
+        # 要在外部执行 self.post_register_buffer
+        mrope_indices = torch.zeros_like(self.inv_freq, dtype=torch.long)
+
+        for dim, offset in enumerate((1, 2), start=1):  # 1:H, 2:W
+            length = self.mrope_section[dim] * 3
+            idx = slice(offset, length, 3)
+            mrope_indices[idx] = dim  # 记录这一维该取 T(0), H(1), 还是 W(2)
+
+        self.register_buffer("mrope_indices", mrope_indices, persistent=False)
+
+    def post_init_inv_freq_cache_sin_cos(self):
+        inv_freq_cache = torch.arange(4096, dtype=torch.float32, device=self.inv_freq.device)[:, None] * self.inv_freq  # TODO
+        inv_freq_cache_cos = inv_freq_cache.cos() * self.attention_scaling  # * 1
+        inv_freq_cache_sin = inv_freq_cache.sin() * self.attention_scaling  # * 1
+
+        self.register_buffer("inv_freq_cache_cos", inv_freq_cache_cos, persistent=False)
+        self.register_buffer("inv_freq_cache_sin", inv_freq_cache_sin, persistent=False)
+
+    @staticmethod
+    def compute_default_rope_parameters(  # ONLY FOR INIT
+        config: Qwen3VLTextConfig | None = None,
+        device: Optional["torch.device"] = None,
+        seq_len: int | None = None,
+    ) -> tuple["torch.Tensor", float]:
+        """
+        Computes the inverse frequencies according to the original RoPE implementation
+        Args:
+            config ([`~transformers.PreTrainedConfig`]):
+                The model configuration.
+            device (`torch.device`):
+                The device to use for initialization of the inverse frequencies.
+            seq_len (`int`, *optional*):
+                The current sequence length. Unused for this type of RoPE.
+        Returns:
+            Tuple of (`torch.Tensor`, `float`), containing the inverse frequencies for the RoPE embeddings and the
+            post-processing scaling factor applied to the computed cos/sin (unused in this type of RoPE).
+        """
+        base = config.rope_parameters["rope_theta"]
+        dim = getattr(config, "head_dim", None) or config.hidden_size // config.num_attention_heads
+
+        attention_factor = 1.0  # Unused in this type of RoPE
+
+        # Compute the inverse frequencies
+        inv_freq = 1.0 / (base ** (torch.arange(0, dim, 2, dtype=torch.int64).to(device=device, dtype=torch.float) / dim))
+        return inv_freq, attention_factor
+
+    @torch.inference_mode()
+    def forward(self, position_ids, is_decoding=False, buffer4decode=None, device_type="cuda", dtype=torch.float16):
+        # position_ids.shape: [3, 1, 690] or [3, 1, 1], BS=1
+        # self.inv_freq.shape: [64]
+        if is_decoding:
+            return self.decode_forward(position_ids, is_decoding, buffer4decode, device_type, dtype)
+        return self.prefill_forward(position_ids, dtype)
+
+    def decode_forward(self, position_ids, is_decoding=False, buffer4decode=None, device_type="cuda", dtype=torch.float16):
+        candidates = {
+            "calc": lambda position_ids: self.decode_forward_calc(position_ids, is_decoding, buffer4decode, device_type, dtype),
+            "table": lambda position_ids: self.decode_forward_table(position_ids, is_decoding, buffer4decode, device_type, dtype),
+        }
+        return self.rope_tuner.dispatch_once(candidates, name="decode", args=(position_ids,))
+
+    def decode_forward_calc(self, position_ids, is_decoding=False, buffer4decode=None, device_type="cuda", dtype=torch.float16):
+        with maybe_autocast(device_type=device_type, enabled=False):  # Force float32
+            freqs = (position_ids[0][0] * self.inv_freq)[None, None]  # Decoding
+            cos = freqs.cos() * self.attention_scaling  # * 1
+            sin = freqs.sin() * self.attention_scaling  # * 1
+
+        buffer4decode: nn.Tensor  # [2, 1, 1, dim]
+        buffer4decode[0].copy_(cos)
+        buffer4decode[1].copy_(sin)
+        res = buffer4decode[0], buffer4decode[1]
+        return res
+
+    def decode_forward_table(self, position_ids, is_decoding=False, buffer4decode=None, device_type="cuda", dtype=torch.float16):
+        cos = self.inv_freq_cache_cos[position_ids[0][0]][None]
+        sin = self.inv_freq_cache_sin[position_ids[0][0]][None]
+
+        buffer4decode: nn.Tensor  # [2, 1, 1, dim]
+        buffer4decode[0].copy_(cos)
+        buffer4decode[1].copy_(sin)
+        res = buffer4decode[0], buffer4decode[1]
+        return res
+
+    def prefill_forward(self, position_ids, dtype=torch.float16):
+        candidates = {
+            "calc": lambda position_ids: self.prefill_forward_calc(position_ids, dtype),
+            "table": lambda position_ids: self.prefill_forward_table(position_ids, dtype),
+        }
+        return self.rope_tuner.dispatch_once(candidates, name="prefill", args=(position_ids,))
+
+    def prefill_forward_calc(self, position_ids, dtype=torch.float16):
+        with maybe_autocast(device_type="cuda", enabled=False):  # Force float32
+            freqs = position_ids[self.mrope_indices].permute(1, 2, 0) * self.inv_freq
+            cos = freqs.cos() * self.attention_scaling  # * 1
+            sin = freqs.sin() * self.attention_scaling  # * 1
+        res = cos.to(dtype=dtype), sin.to(dtype=dtype)
+        return res
+
+    def prefill_forward_table(self, position_ids, dtype=torch.float16):
+        # 查表的
+        # [3, 1, 690]-> [1, 690, 64]
+        indices_3d = position_ids[self.mrope_indices].permute(1, 2, 0)
+        idx_2d = indices_3d.squeeze(0)  # [690, 64]
+
+        # [4096, 64] -> [690, 64]
+        cos_2d = torch.gather(self.inv_freq_cache_cos, dim=0, index=idx_2d)  # [690, 64], 输出和 index shape 一致
+        sin_2d = torch.gather(self.inv_freq_cache_sin, dim=0, index=idx_2d)
+        res = cos_2d[None].to(dtype), sin_2d[None].to(dtype)
+        return res
+
+
+class Qwen3VLTextRMSNorm(nn.Module):
+    def __init__(self, hidden_size, eps: float = 1e-6) -> None:
+        """
+        Qwen3VLTextRMSNorm is equivalent to T5LayerNorm
+        """
+        super().__init__()
+        self.hidden_dim = hidden_size
+        self.weight = nn.Parameter(torch.ones(hidden_size))
+        self.variance_epsilon = eps
+        self.decode_norm_tuner = RuntimeAutotuner(name=self.__class__.__name__, fallback="fused_1d", strict=True, check_correctness=True)
+        self.prefill_norm_tuner = RuntimeAutotuner(name=self.__class__.__name__, fallback="torch_rms_norm", strict=True)
+
+    def forward(self, hidden_states: torch.Tensor, decode=False, inplace=False, out=None, cg_bucket_size: int | None = None, is_warmup: bool = False) -> torch.Tensor:
+        if decode:  # 这个 BS=1
+            if out is not None:
+                return fused_1d_rmsnorm(hidden_states, self.weight, eps=self.variance_epsilon, inplace=False, out=out)
+
+            decode_candidates = {
+                "fused_1d": lambda hidden_states: fused_1d_rmsnorm(hidden_states, self.weight, eps=self.variance_epsilon, inplace=False, out=out),
+                "torch_rms_norm": lambda hidden_states: torch.nn.functional.rms_norm(hidden_states, [self.hidden_dim], self.weight, eps=self.variance_epsilon),
+                "triton_general": lambda hidden_states: torch.ops.qwen3vl.rmsnorm_forward(
+                    hidden_states, self.hidden_dim, weight=self.weight, inplace=False, eps=self.variance_epsilon
+                ),
+            }
+            return self.decode_norm_tuner.dispatch_once(decode_candidates, name="decode", args=(hidden_states,))
+
+        # Prefill
+        # [1, 690, 2048], [2048] -> [1, 690, 2048]
+        prefill_candidates = {
+            "torch_rms_norm": lambda hidden_states: torch.nn.functional.rms_norm(hidden_states, [self.hidden_dim], self.weight, eps=self.variance_epsilon),
+            "triton_general": lambda hidden_states: torch.ops.qwen3vl.rmsnorm_forward(hidden_states, self.hidden_dim, weight=self.weight, inplace=False, eps=self.variance_epsilon),
+        }
+        if cg_bucket_size is not None:
+            return self.prefill_norm_tuner.dispatch(cg_bucket_size, prefill_candidates, is_warmup, args=(hidden_states,))
+        return self.prefill_norm_tuner.dispatch_once(prefill_candidates, name="prefill", args=(hidden_states,))
+        # Torch Native:
+        # input_dtype = hidden_states.dtype
+        # hidden_states = hidden_states.to(torch.float32)
+        # variance = hidden_states.pow(2).mean(-1, keepdim=True)
+        # hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)
+        # return self.weight * hidden_states.to(input_dtype)
+
+    def extra_repr(self):
+        return f"{tuple(self.weight.shape)}, eps={self.variance_epsilon}"
+
+
+import cv2
+import torch
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def plot_attn_safe(img_path, attn_tensor, token_text):
+    """
+    attn_tensor: 应该是从 question_to_image_attn 提取出的单头、单token权重
+    """
+    # 1. 确保数据在 CPU 上，且转为 float32 (OpenCV 兼容)
+    # 2. 移除冗余维度 (Squeeze)
+    attn_map = attn_tensor.detach().to(torch.float32).cpu().squeeze().numpy()
+
+    # 检查维度是否为 2D (应该是 24x28 或类似)
+    if len(attn_map.shape) != 2:
+        print(f"Error: attn_map shape is {attn_map.shape}, needs to be 2D.")
+        return
+
+    # 读取原图
+    img = cv2.imread(img_path)
+    if img is None:
+        print(f"Error: Could not load image at {img_path}")
+        return
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    h, w, _ = img.shape
+
+    # 3. 归一化到 [0, 1] 方便观察
+    # 这一步很重要，因为切片后的 softmax 和不一定是 1
+    attn_map = (attn_map - attn_map.min()) / (attn_map.max() - attn_map.min() + 1e-8)
+
+    # 4. Resize
+    # 注意 OpenCV 的 resize 参数是 (width, height)
+    heatmap_resized = cv2.resize(attn_map, (w, h), interpolation=cv2.INTER_LINEAR)
+
+    # 可视化
+    plt.figure(figsize=(10, 10))
+    plt.imshow(img)
+    # 使用 jet 或 viridis 这种对比度强的颜色映射
+    plt.imshow(heatmap_resized, alpha=0.6, cmap="jet")
+    plt.title(f"Attention for: {token_text}")
+    plt.axis("off")
+    plt.savefig("x.png")
+
+
+class Qwen3VLTextAttention(nn.Module):
+    """Multi-headed attention from 'Attention Is All You Need' paper"""
+
+    def __init__(self, config: Qwen3VLTextConfig, layer_idx: int):
+        super().__init__()
+        self.layer_type = config.layer_types[layer_idx] if hasattr(config, "layer_types") else None
+        self.config = config
+        self.layer_idx = layer_idx
+        self.head_dim = getattr(config, "head_dim", config.hidden_size // config.num_attention_heads)
+        self.num_key_value_groups = config.num_attention_heads // config.num_key_value_heads
+        self.scaling = self.head_dim**-0.5
+        self.attention_dropout = config.attention_dropout
+        self.is_causal = True
+        self.hidden_size = config.hidden_size
+
+        self.q_proj = nn.Linear(
+            config.hidden_size,
+            config.num_attention_heads * self.head_dim,
+            bias=config.attention_bias,  # False
+        )
+        self.k_proj = nn.Linear(
+            config.hidden_size,
+            config.num_key_value_heads * self.head_dim,
+            bias=config.attention_bias,  # False
+        )
+        self.v_proj = nn.Linear(
+            config.hidden_size,
+            config.num_key_value_heads * self.head_dim,
+            bias=config.attention_bias,  # False
+        )
+        self.o_proj = nn.Linear(
+            config.num_attention_heads * self.head_dim,
+            config.hidden_size,
+            bias=config.attention_bias,  # False
+        )
+        self.qkv_odim = [
+            config.num_attention_heads * self.head_dim,
+            config.num_key_value_heads * self.head_dim,
+            config.num_key_value_heads * self.head_dim,
+        ]
+        self.qkv_proj = nn.Linear(
+            config.hidden_size,
+            sum(self.qkv_odim),
+            bias=config.attention_bias,  # False
+        )
+
+        self.q_norm = Qwen3VLTextRMSNorm(self.head_dim, eps=config.rms_norm_eps)  # unlike olmo, only on the head dim!
+        self.k_norm = Qwen3VLTextRMSNorm(self.head_dim, eps=config.rms_norm_eps)  # thus post q_norm does not need reshape
+
+        self.input_layernorm = Qwen3VLTextRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+
+        MAX_SEQ_LEN = 4096  # 你的 KV Cache 支持的最大长度
+        BLOCK_SEQ = 128  # 我们特化设置的 Chunk 大小
+        NUM_Q_HEADS = config.num_attention_heads  # Q 的头数
+        HEAD_DIM = self.head_dim  # Head 维度
+
+        MAX_CHUNKS = math.ceil(MAX_SEQ_LEN / BLOCK_SEQ)
+
+        acc_partial_buffer = torch.empty((NUM_Q_HEADS, MAX_CHUNKS, HEAD_DIM))
+        m_partial_buffer = torch.empty((NUM_Q_HEADS, MAX_CHUNKS), dtype=torch.float32)
+        l_partial_buffer = torch.empty((NUM_Q_HEADS, MAX_CHUNKS), dtype=torch.float32)
+
+        self.register_buffer("acc_partial_buffer", acc_partial_buffer)
+        self.register_buffer("m_partial_buffer", m_partial_buffer)
+        self.register_buffer("l_partial_buffer", l_partial_buffer)
+
+        self.replaced = False
+        self.decode_replace_range = list(range(17, 27 + 1))  # TODO: 这里需要调整
+        self.decode_replace_range = []
+        self.register_buffer("qkv_proj_decode_weight", None, persistent=False)
+
+    def linear_post_init(self):
+        if self.replaced:
+            return
+
+        # [out, in]
+        self.qkv_proj.weight.data.copy_(
+            torch.cat(
+                [
+                    self.q_proj.weight.data * self.input_layernorm.weight,
+                    self.k_proj.weight.data * self.input_layernorm.weight,
+                    self.v_proj.weight.data * self.input_layernorm.weight,
+                ],
+                dim=0,
+            ).contiguous()
+        )
+        del self.q_proj
+        del self.k_proj
+        del self.v_proj
+        # del self.input_layernorm
+
+        self.replaced = True
+        if self.layer_idx in self.decode_replace_range:
+            self.qkv_proj_decode_weight = self.qkv_proj.weight.detach().clone()
+            self.qkv_proj_decode_weight.mul_(QWEN3VL_TEXT_ATTENTION_DECODE_RMS_MEAN[self.layer_idx])
+
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        position_embeddings: tuple[torch.Tensor, torch.Tensor],
+        attention_mask: torch.Tensor | None = None,  # None
+        past_key_values: Cache | None = None,
+        cache_position: torch.LongTensor | None = None,
+        current_pos: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+        k_cache: torch.Tensor = None,
+        v_cache: torch.Tensor = None,
+        cache_seqlens: torch.Tensor = None,  # bs=1, FOR CUDAGraph
+        decode_norm_buffer: torch.Tensor | None = None,
+        decode_attn_output_buffer: torch.Tensor | None = None,
+        cg_bucket_size: int | None = None,
+        is_warmup: bool = False,
+        layer_stats_collector=None,
+    ) -> tuple[torch.Tensor, torch.Tensor | None]:
+
+        if is_decoding:
+            return self._decode_forward(
+                hidden_states,
+                position_embeddings,
+                is_decoding=True,
+                k_cache=k_cache,
+                v_cache=v_cache,
+                cache_seqlens=cache_seqlens,
+                decode_norm_buffer=decode_norm_buffer,
+                decode_attn_output_buffer=decode_attn_output_buffer,
+                cg_bucket_size=cg_bucket_size,
+                is_warmup=is_warmup,
+                layer_stats_collector=layer_stats_collector,
+            )
+
+        return self._prefill_forward(
+            hidden_states, position_embeddings, is_decoding=False, k_cache=k_cache, v_cache=v_cache, cache_seqlens=cache_seqlens, cg_bucket_size=cg_bucket_size, is_warmup=is_warmup
+        )
+
+    def _prefill_forward(
+        self,
+        hidden_states: torch.Tensor,
+        position_embeddings: tuple[torch.Tensor, torch.Tensor],
+        attention_mask: torch.Tensor | None = None,  # None
+        past_key_values: Cache | None = None,
+        cache_position: torch.LongTensor | None = None,
+        current_pos: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+        k_cache: torch.Tensor = None,
+        v_cache: torch.Tensor = None,
+        cache_seqlens: torch.Tensor = None,  # bs=1, FOR CUDAGraph
+        cg_bucket_size: int | None = None,
+        is_warmup: bool = False,
+    ) -> tuple[torch.Tensor, torch.Tensor | None]:
+
+        residual = hidden_states
+
+        bs, seq_len, hidden_dim = hidden_states.shape
+        hidden_shape = [bs, seq_len, -1, self.head_dim]
+
+        hidden_states = F.rms_norm(hidden_states, [self.hidden_size], eps=self.input_layernorm.variance_epsilon)
+        query_states, key_states, value_states = self.qkv_proj(hidden_states).split(self.qkv_odim, dim=-1)
+
+        cos, sin = position_embeddings
+        query_states = torch.ops.qwen3vl.fused_rms_norm_rope_triton_bs1(query_states, list(position_embeddings), self.q_norm.weight, hidden_shape, eps=1e-6, inplace=False)
+
+        # K: RMSNorm + RoPE → write directly into k_cache (skip temp alloc + copy)
+        _launch_k_rope_to_cache(
+            key_states,
+            self.k_norm.weight,
+            cos,
+            sin,
+            k_cache,
+            seq_len,
+            hidden_shape,
+            self.head_dim,
+            eps=1e-6,
+        )
+
+        # V: copy into v_cache (view makes it contiguous in cache)
+        v_cache[:, :seq_len, :, :] = value_states.view(hidden_shape)
+        cache_seqlens.fill_(seq_len)
+
+        # flash_attn reads from cache slices — K is already there, V is contiguous in v_cache
+        k_from_cache = k_cache[:, :seq_len, :, :]
+        v_from_cache = v_cache[:, :seq_len, :, :]
+
+        # # breakpoint()
+        # kv_len = 400
+        # k_cache[:, :kv_len] = k_from_cache[:, -kv_len:].clone()
+        # v_cache[:, :kv_len] = v_from_cache[:, -kv_len:].clone()
+        # k_from_cache = k_cache[:, :kv_len]
+        # v_from_cache = v_cache[:, :kv_len]
+        # cache_seqlens.fill_(kv_len)
+
+        # if self.layer_idx == 23:
+        #     breakpoint()
+        # k_rep = torch.repeat_interleave(k_from_cache, repeats=2, dim=2) # [1, 690, 16, 128]
+        # Q = query_states.transpose(1, 2)    # [1, 16, 690, 128]
+        # k = k_rep.transpose(1, 2)           # [1, 16, 690, 128]
+        # attn_logits = torch.matmul(Q, k.transpose(-1, -2)) / math.sqrt(128)
+        # mask = torch.triu(torch.ones(690, 690, device='cuda'), diagonal=1).bool()
+        # attn_logits.masked_fill_(mask, float('-inf'))
+        # attn_probs = torch.softmax(attn_logits, dim=-1) # [1, 16, 690, 690], [42 // 2, 64 // 2]
+
+        # # 4 个基本 token
+        # # 672 个图片 token
+        # # 14 个问题 token
+
+        # question_to_image_attn = attn_probs[:, :, 677:685, 4:676]
+        # head_idx = 0
+        # token_idx = 6 # 对应问题中的第 1 个词, 13
+        # heatmap = question_to_image_attn[0, head_idx, token_idx, :].reshape(42 // 2, 64 // 2)
+        # plot_attn_safe("images/0.jpg", heatmap, "brand")
+
+        # if self.layer_idx == 23:
+        #     breakpoint()
+
+        attn_output = flash_attn_func(query_states, k_from_cache, v_from_cache, causal=True)
+        attn_output = attn_output.flatten(-2)
+
+        attn_output = torch.addmm(
+            residual.view(-1, self.hidden_size),
+            attn_output.view(-1, self.hidden_size),
+            self.o_proj.weight.T,
+        ).view_as(residual)
+
+        return attn_output, None
+
+    def _decode_forward(
+        self,
+        hidden_states: torch.Tensor,
+        position_embeddings: tuple[torch.Tensor, torch.Tensor],
+        attention_mask: torch.Tensor | None = None,  # None
+        past_key_values: Cache | None = None,
+        cache_position: torch.LongTensor | None = None,
+        current_pos: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+        k_cache: torch.Tensor = None,
+        v_cache: torch.Tensor = None,
+        cache_seqlens: torch.Tensor = None,  # bs=1, FOR CUDAGraph
+        decode_norm_buffer: torch.Tensor | None = None,
+        decode_attn_output_buffer: torch.Tensor | None = None,
+        cg_bucket_size: int | None = None,
+        is_warmup: bool = False,
+        layer_stats_collector=None,
+    ) -> tuple[torch.Tensor, torch.Tensor | None]:
+        assert cg_bucket_size is not None and cg_bucket_size > 0
+
+        residual = hidden_states
+
+        bs, seq_len, _ = hidden_states.shape
+        hidden_shape = (bs, seq_len, -1, self.head_dim)
+        if self.layer_idx in self.decode_replace_range:
+            qkv_states = F.linear(hidden_states, self.qkv_proj_decode_weight, self.qkv_proj.bias)
+        else:
+            hidden_states = fused_1d_rmsnorm(hidden_states, None, eps=self.input_layernorm.variance_epsilon, out=decode_norm_buffer)
+            qkv_states = self.qkv_proj(hidden_states)
+
+        # TODO: 这个确认就是最好的吗?
+        q_states = algebra_prep_qkv_and_cache(
+            qkv_states,
+            position_embeddings,
+            self.q_norm.weight,
+            self.k_norm.weight,
+            k_cache,
+            v_cache,
+            cache_seqlens,  # Tensor
+            hidden_shape,
+            qkv_odim=self.qkv_odim,
+            inplace=False,
+        )
+        if layer_stats_collector is not None:
+            layer_stats_collector.record_kv_gap(self.layer_idx, k_cache, v_cache, cache_seqlens)
+
+        attn_output = algebra_split_k_decode_cudagraph(
+            q_states,
+            k_cache,
+            v_cache,
+            cache_seqlens,
+            self.acc_partial_buffer,
+            self.m_partial_buffer,
+            self.l_partial_buffer,
+            cg_bucket_size,
+        ).flatten(2)
+
+        attn_output = torch.addmm(residual.squeeze(0), attn_output.squeeze(0), self.o_proj.weight.T).view_as(residual)
+        return attn_output, None
+
+
+class Qwen3VLTextMLP(nn.Module):
+    def __init__(self, config, layer_idx):
+        super().__init__()
+        self.config = config
+        self.hidden_size = config.hidden_size  # 2048
+        self.intermediate_size = config.intermediate_size  # 6144
+        self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+        self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+        self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
+        self.act_fn = ACT2FN[config.hidden_act]  # silu
+        self.gate_up_proj = nn.Linear(self.hidden_size, self.intermediate_size * 2, bias=False)
+        self.post_attention_layernorm = nn.RMSNorm([self.hidden_size])  # TODO, 用纯权重就行
+        self.replaced = False
+        self.decode_replace_range = list(range(17, 27 + 1))  # TODO: 这里需要调整
+        self.decode_replace_range = []
+        self.register_buffer("gate_up_proj_decode_weight", None, persistent=False)
+
+        self.layer_idx = layer_idx  # 记录是第几个 Qwen3VLTextDecoderLayer
+
+    def linear_post_init(self):
+        if self.replaced:
+            return
+        combined_weight = torch.cat(
+            [self.gate_proj.weight.detach().data, self.up_proj.weight.detach().data],
+            dim=0,
+        ).contiguous()
+        self.gate_up_proj.weight.data.copy_(combined_weight)
+        # 合并前面的 RMSNorm 的权重
+        self.gate_up_proj.weight.data.copy_(self.gate_up_proj.weight.data * self.post_attention_layernorm.weight.data)
+        self.post_attention_layernorm.weight.data.fill_(1.0)
+
+        del self.gate_proj
+        del self.up_proj
+        self.replaced = True
+
+        # 此处干掉无参数的 rms_norm, 用常数取代 rms
+        if self.layer_idx in self.decode_replace_range:
+            self.gate_up_proj_decode_weight = self.gate_up_proj.weight.detach().clone()
+            self.gate_up_proj_decode_weight.mul_(QWEN3VL_TEXT_MLP_DECODE_RMS_MEAN[self.layer_idx])
+
+    def _decode_forward(self, x, decode_norm_buffer=None):
+        # 就干了一件事，
+        # return self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+        # x.shape: [1, 1, 2048]
+        residual = x
+
+        if self.layer_idx in self.decode_replace_range:
+            # [1, 2048] @ [12288, 2048].T
+            gate_up = F.linear(x, self.gate_up_proj_decode_weight)
+        else:
+            x = fused_1d_rmsnorm(x, None, eps=self.post_attention_layernorm.eps, out=decode_norm_buffer)
+            # [1, 2048] @ [12288, 2048].T
+            gate_up = self.gate_up_proj(x)
+
+        activated = fused_swiglu_decode(gate_up)
+        return torch.addmm(residual.squeeze(0), activated.squeeze(0), self.down_proj.weight.T).view_as(residual)
+
+    def _prefill_forward(self, x, cg_bucket_size=None, is_warmup=False):
+        residual = x
+        x_normed = torch.ops.qwen3vl.rmsnorm_forward(x, self.hidden_size, None, False, self.post_attention_layernorm.eps)
+        gate_up = self.gate_up_proj(x_normed)
+        activated = fused_swiglu_prefill(gate_up)
+
+        return torch.addmm(residual.squeeze(0), activated.squeeze(0), self.down_proj.weight.T).view_as(residual)
+
+    def forward(self, x, decode=False, decode_norm_buffer=None, cg_bucket_size=None, is_warmup=False):
+        if decode:
+            return self._decode_forward(x, decode_norm_buffer=decode_norm_buffer)
+        return self._prefill_forward(x, cg_bucket_size=cg_bucket_size, is_warmup=is_warmup)
+
+
+class Qwen3VLTextDecoderLayer(GradientCheckpointingLayer):
+    def __init__(self, config: Qwen3VLTextConfig, layer_idx: int):
+        super().__init__()
+        self.hidden_size = config.hidden_size
+
+        self.self_attn = Qwen3VLTextAttention(config=config, layer_idx=layer_idx)
+        self.mlp = Qwen3VLTextMLP(config, layer_idx)
+
+        # 这两 norm 已被融合，但是不能被注释！用来参数中转
+        self.input_layernorm = Qwen3VLTextRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = Qwen3VLTextRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+
+        self.layer_idx = layer_idx
+
+    def mlp_post_init(self):
+
+        self.self_attn.input_layernorm.weight.data.copy_(self.input_layernorm.weight)
+        self.self_attn.input_layernorm.eps = self.input_layernorm.variance_epsilon
+        del self.input_layernorm
+
+        self.mlp.post_attention_layernorm.weight.data.copy_(self.post_attention_layernorm.weight)
+        self.mlp.post_attention_layernorm.eps = self.post_attention_layernorm.variance_epsilon
+        del self.post_attention_layernorm
+
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        position_embeddings: tuple[torch.Tensor, torch.Tensor],
+        attention_mask: torch.Tensor | None = None,
+        position_ids: torch.LongTensor | None = None,
+        past_key_values: Cache | None = None,
+        use_cache: bool | None = False,
+        cache_position: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+        attn_k_cache: torch.Tensor | None = None,
+        attn_v_cache: torch.Tensor | None = None,
+        cache_seqlens: torch.Tensor | None = None,
+        decode_attn_norm_buffer: torch.Tensor | None = None,
+        decode_attn_output_buffer: torch.Tensor | None = None,
+        decode_mlp_norm_buffer: torch.Tensor | None = None,
+        cg_bucket_size: int | None = None,
+        is_warmup: bool = False,
+        layer_stats_collector=None,
+        **kwargs: Unpack[TransformersKwargs],
+    ) -> torch.Tensor:
+
+        h_in = hidden_states
+        hidden_states, _ = self.self_attn(
+            hidden_states=hidden_states,
+            attention_mask=None,
+            past_key_values=None,
+            cache_position=None,
+            position_embeddings=position_embeddings,
+            is_decoding=is_decoding,
+            k_cache=attn_k_cache,
+            v_cache=attn_v_cache,
+            cache_seqlens=cache_seqlens,
+            decode_norm_buffer=decode_attn_norm_buffer,
+            decode_attn_output_buffer=decode_attn_output_buffer,
+            cg_bucket_size=cg_bucket_size,
+            is_warmup=is_warmup,
+            layer_stats_collector=layer_stats_collector,
+        )
+        h_attn = hidden_states
+        # if is_decoding:
+        #     breakpoint()
+        #     attention_sign = (hidden_states > 0).flatten()
+
+        hidden_states = self.mlp(hidden_states, is_decoding, decode_norm_buffer=decode_mlp_norm_buffer, cg_bucket_size=cg_bucket_size, is_warmup=is_warmup)
+        if layer_stats_collector is not None:
+            layer_stats_collector.record_layer(
+                layer_idx=self.layer_idx,
+                is_decoding=is_decoding,
+                h_in=h_in,
+                h_attn=h_attn,
+                h_out=hidden_states,
+            )
+
+        # if is_decoding:
+        #     mlp_sign = (hidden_states > 0).flatten()
+        #     breakpoint()
+        #     print( (attention_sign == mlp_sign).sum() )
+        return hidden_states
+
+
+@auto_docstring(custom_intro=("Text part of Qwen3VL, not a pure text-only model, as DeepStack integrates visual features into the early hidden states."))
+class Qwen3VLTextModel(Qwen3VLPreTrainedModel):
+    config: Qwen3VLTextConfig
+    input_modalities = ("text",)
+    _no_split_modules = ["Qwen3VLTextDecoderLayer"]
+
+    def __init__(self, config: Qwen3VLTextConfig):
+        super().__init__(config)
+        self.padding_idx = config.pad_token_id
+        self.vocab_size = config.vocab_size
+
+        self.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size, self.padding_idx)  # 这个就是输入层的 word embedding
+        self.layers = nn.ModuleList([Qwen3VLTextDecoderLayer(config, layer_idx) for layer_idx in range(config.num_hidden_layers)])
+        self.norm = Qwen3VLTextRMSNorm(config.hidden_size, eps=config.rms_norm_eps)  # 最后的输出层 norm，weight 已被融合，forward 可以注释，原因见后面
+        self.rotary_emb = Qwen3VLTextRotaryEmbedding(config=config)
+        self.gradient_checkpointing = False
+
+        # FOR CUDAGRAPH, ONLY FOR DECODE BS=1
+        pe_buffer4decode = torch.empty(2, 1, 1, config.head_dim // 2)
+        self.register_buffer("pe_buffer4decode", pe_buffer4decode, persistent=False)
+        attn_kv_cache = torch.empty(config.num_hidden_layers, 2, 1, 4096, config.num_key_value_heads, config.head_dim)  # [28, 2, 1, 4096, 8, 128] # FOR BS=1
+        self.register_buffer("attn_kv_cache", attn_kv_cache, persistent=False)
+        cache_seqlens = torch.zeros(1, dtype=torch.int32)  # for flash attn
+        self.register_buffer("cache_seqlens", cache_seqlens, persistent=False)
+        hidden_states_buffer = torch.randn(1, 1, config.hidden_size)
+        self.register_buffer("hidden_states_buffer", hidden_states_buffer, persistent=False)
+        position_ids_buffer = torch.empty(3, 1, 1, dtype=torch.int32)
+        self.register_buffer("position_ids_buffer", position_ids_buffer, persistent=False)
+        decode_attn_norm_buffers = torch.empty(config.num_hidden_layers, 1, 1, config.hidden_size)
+        self.register_buffer("decode_attn_norm_buffers", decode_attn_norm_buffers, persistent=False)
+        decode_attn_output_buffers = torch.empty(config.num_hidden_layers, 1, 1, config.hidden_size)
+        self.register_buffer("decode_attn_output_buffers", decode_attn_output_buffers, persistent=False)
+        decode_mlp_norm_buffers = torch.empty(config.num_hidden_layers, 1, 1, config.hidden_size)
+        self.register_buffer("decode_mlp_norm_buffers", decode_mlp_norm_buffers, persistent=False)
+
+        # CUDA Graph 序列长度分桶 (Buckets)
+        self.bucket_upper_bounds = [512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664, 1792, 1920, 2048, 4096 - 128]  # TODO: 4096 要改成全局变量
+        self.bucket_lower_bounds = [0, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664, 1792, 1920, 2048]
+
+        self.decode_graphs = {}  # 存放不同 Bucket 对应的 CUDA Graph 对象
+        self.decode_graph_outputs = {}
+        self.is_decode_graphs_captured = False  # 防止重复录制的 flag
+        self.cache_seqlens_len = 4096
+
+        # FOR CUDA GRAPH, PREFILL (layers 3+ and norm)
+        # fmt: off
+        self.prefill_graph_seq_lens = [
+            272,   336,   337,   368,   369,   370,   372,   400,   401,   402,
+            403,   431,   432,   433,   434,   435,   437,   438,   463,   464,
+            465,   466,   467,   468,   469,   470,   472,   473,   495,   496,
+            497,   498,   499,   500,   502,   527,   528,   529,   530,   531,
+            532,   533,   558,   559,   560,   561,   562,   563,   564,   565,
+            566,   591,   592,   593,   594,   595,   596,   597,   598,   599,
+            600,   602,   603,   617,   618,   621,   623,   624,   625,   626,
+            627,   628,   629,   630,   631,   632,   635,   641,   642,   643,
+            655,   656,   657,   658,   659,   660,   661,   662,   663,   664,
+            667,   668,   671,   686,   687,   688,   689,   690,   691,   692,
+            693,   694,   695,   696,   697,   698,   699,   701,   703,   712,
+            715,   718,   719,   720,   721,   722,   723,   724,   725,   726,
+            727,   728,   729,   730,   731,   735,   736,   739,   740,   742,
+            744,   749,   751,   752,   753,   754,   755,   756,   757,   758,
+            759,   760,   761,   762,   763,   764,   782,   783,   784,   785,
+            786,   787,   788,   789,   790,   791,   792,   793,   794,   795,
+            796,   797,   798,   800,   808,   814,   815,   816,   817,   818,
+            819,   820,   821,   822,   823,   846,   847,   848,   849,   850,
+            851,   852,   853,   854,   860,   861,   879,   880,   881,   882,
+            883,   884,   885,   886,   887,   910,   911,   912,   913,   914,
+            915,   916,   917,   918,   919,   921,   943,   944,   945,   946,
+            947,   948,   949,   950,   953,   974,   976,   977,   978,   979,
+            980,   982,   983,   1007,  1008,  1009,  1010,  1011,  1012,  1013,
+            1014,  1038,  1039,  1040,  1041,  1042,  1043,  1044,  1045,  1046,
+            1047,  1048,  1049,  1050,
+        ]
+        # self.prefill_graph_seq_lens = list(range(272, 1100))
+        # fmt: on
+        self.num_deepstack_layers = 3  # first 3 layers always run eager (deepstack +=)
+        _max_pf_sl = max(self.prefill_graph_seq_lens)
+        prefill_hs_buf = torch.randn(1, _max_pf_sl, config.hidden_size)
+        self.register_buffer("prefill_hs_buffer", prefill_hs_buf, persistent=False)
+        prefill_pe_cos_buf = torch.empty(1, _max_pf_sl, config.head_dim // 2)
+        self.register_buffer("prefill_pe_cos_buffer", prefill_pe_cos_buf, persistent=False)
+        prefill_pe_sin_buf = torch.empty(1, _max_pf_sl, config.head_dim // 2)
+        self.register_buffer("prefill_pe_sin_buffer", prefill_pe_sin_buf, persistent=False)
+        self.prefill_graphs = {}  # {seq_len: (CUDAGraph, output_tensor_ref)}
+        self.prefill_graphs_captured = False
+
+        self.using_cudagraph = os.environ.get("USE_CUDAGRAPH", "1").lower() in ["1", "true", "yes"]
+        self.layer_stats = maybe_create_layer_stats_collector(config.num_hidden_layers, config.hidden_size)
+        if self.layer_stats is not None and self.using_cudagraph:
+            print("[LayerStats] forcing USE_CUDAGRAPH=0 for calibration collection", flush=True)
+            self.using_cudagraph = False
+        self.decode_num_layers = int(os.environ.get("DECODE_NUM_LAYERS", str(config.num_hidden_layers)))
+        if not (1 <= self.decode_num_layers <= config.num_hidden_layers):
+            raise ValueError(f"DECODE_NUM_LAYERS must be in [1, {config.num_hidden_layers}], got {self.decode_num_layers}")
+        self.decode_skip_layers = _parse_layer_set(os.environ.get("DECODE_SKIP_LAYERS", ""), config.num_hidden_layers)
+        self.decode_skip_rms_scale = float(os.environ.get("DECODE_SKIP_RMS_SCALE", "1.0"))
+        self.decode_skip_target_rms = float(os.environ.get("DECODE_SKIP_TARGET_RMS", "0.0"))
+        self.decode_skip_scale_min = float(os.environ.get("DECODE_SKIP_SCALE_MIN", "0.0"))
+        self.decode_skip_scale_max = float(os.environ.get("DECODE_SKIP_SCALE_MAX", "0.0"))
+        decode_skip_scale_vector_path = os.environ.get("DECODE_SKIP_SCALE_VECTOR", "").strip()
+        if decode_skip_scale_vector_path:
+            payload = torch.load(decode_skip_scale_vector_path, map_location="cpu")
+            scale_vector = payload["scale_vector"] if isinstance(payload, dict) else payload
+            if scale_vector.shape != (config.hidden_size,):
+                raise ValueError(f"DECODE_SKIP_SCALE_VECTOR must have shape=({config.hidden_size},), got {tuple(scale_vector.shape)}")
+            scale_vector = scale_vector.to(torch.float16).contiguous()
+        else:
+            scale_vector = torch.empty(0, dtype=torch.float16)
+        self._decode_skip_scale_vector_cpu = scale_vector.clone() if scale_vector.numel() > 0 else None
+        self.decode_skip_scale_vector_ready = scale_vector.numel() == 0
+        self.register_buffer("decode_skip_scale_vector", scale_vector, persistent=False)
+        self.decode_skip_scale_before_layer = int(os.environ.get("DECODE_SKIP_SCALE_BEFORE_LAYER", str(max(self.decode_skip_layers) + 1 if self.decode_skip_layers else -1)))
+        if self.decode_skip_layers:
+            print(
+                "[DecodeSkip] "
+                f"layers={sorted(self.decode_skip_layers)} "
+                f"vector={decode_skip_scale_vector_path or '<none>'} "
+                f"rms_scale={self.decode_skip_rms_scale:.8f} "
+                f"target_rms={self.decode_skip_target_rms:.8f} "
+                f"scale_min={self.decode_skip_scale_min:.8f} "
+                f"scale_max={self.decode_skip_scale_max:.8f} "
+                f"scale_before_layer={self.decode_skip_scale_before_layer}",
+                flush=True,
+            )
+
+        # Initialize weights and apply final processing
+        self.post_init()
+
+    def _ensure_decode_skip_scale_vector(self, hidden_states: torch.Tensor) -> None:
+        if self.decode_skip_scale_vector_ready or self._decode_skip_scale_vector_cpu is None:
+            return
+        self.decode_skip_scale_vector = self._decode_skip_scale_vector_cpu.to(device=hidden_states.device, dtype=hidden_states.dtype).contiguous()
+        self.decode_skip_scale_vector_ready = True
+
+    def _decode_layers(self, hidden_states, position_ids, cg_bucket_size, is_warmup=False):
+        self._ensure_decode_skip_scale_vector(hidden_states)
+        position_embeddings = self.rotary_emb(position_ids, is_decoding=True, buffer4decode=self.pe_buffer4decode, device_type=hidden_states.device.type, dtype=hidden_states.dtype)
+
+        # position_embeddings[0][:] = 0.
+        # position_embeddings[1][:] = 0.
+        collect_lmhead = self.layer_stats is not None and self.layer_stats.should_collect_lmhead()
+        all_layers_hidden_states = [] if collect_lmhead else None
+
+        for layer_idx in range(self.decode_num_layers):
+            if layer_idx == self.decode_skip_scale_before_layer:
+                if self.decode_skip_scale_vector.numel() > 0:
+                    hidden_states.mul_(self.decode_skip_scale_vector.view(1, 1, -1))
+                elif self.decode_skip_target_rms > 0.0:
+                    current_rms = hidden_states.float().pow(2).mean(dim=-1, keepdim=True).sqrt().clamp_min(1e-6)
+                    skip_scale = self.decode_skip_target_rms / current_rms
+                    if self.decode_skip_scale_min > 0.0:
+                        skip_scale = skip_scale.clamp_min(self.decode_skip_scale_min)
+                    if self.decode_skip_scale_max > 0.0:
+                        skip_scale = skip_scale.clamp_max(self.decode_skip_scale_max)
+                    hidden_states.mul_(skip_scale.to(dtype=hidden_states.dtype))
+                elif self.decode_skip_rms_scale != 1.0:
+                    hidden_states.mul_(self.decode_skip_rms_scale)
+            if layer_idx in self.decode_skip_layers:
+                if all_layers_hidden_states is not None:
+                    all_layers_hidden_states.append(hidden_states.detach().clone())
+                continue
+            decoder_layer = self.layers[layer_idx]
+            hidden_states = decoder_layer(
+                hidden_states,
+                position_ids=None,
+                attention_mask=None,
+                past_key_values=None,
+                cache_position=None,
+                position_embeddings=position_embeddings,
+                is_decoding=True,
+                attn_k_cache=self.attn_kv_cache[layer_idx][0],
+                attn_v_cache=self.attn_kv_cache[layer_idx][1],
+                cache_seqlens=self.cache_seqlens,
+                cg_bucket_size=cg_bucket_size,
+                is_warmup=is_warmup,
+                decode_attn_norm_buffer=self.decode_attn_norm_buffers[layer_idx],
+                decode_attn_output_buffer=self.decode_attn_output_buffers[layer_idx],
+                decode_mlp_norm_buffer=self.decode_mlp_norm_buffers[layer_idx],
+                layer_stats_collector=self.layer_stats,
+            )
+            if all_layers_hidden_states is not None:
+                all_layers_hidden_states.append(hidden_states.detach().clone())
+
+        if all_layers_hidden_states is not None:
+            all_layers_hidden_states = tuple(all_layers_hidden_states)
+        return hidden_states, all_layers_hidden_states
+
+    def _capture_all_decode_graphs(self):
+        if self.is_decode_graphs_captured:
+            return
+
+        s = torch.cuda.Stream()
+        s.wait_stream(torch.cuda.current_stream())
+
+        mempool = None
+
+        with torch.cuda.stream(s):
+            for bucket_size in self.bucket_upper_bounds:
+                self.cache_seqlens.fill_(bucket_size - 1)
+
+                for _ in range(3):
+                    hidden_states, _ = self._decode_layers(self.hidden_states_buffer, self.position_ids_buffer, bucket_size, is_warmup=True)
+                    self.hidden_states_buffer.copy_(hidden_states)
+
+                g = torch.cuda.CUDAGraph()
+
+                with torch.cuda.graph(g, pool=mempool):
+                    hidden_states, all_layers_hidden_states = self._decode_layers(
+                        self.hidden_states_buffer,
+                        self.position_ids_buffer,
+                        bucket_size,
+                        is_warmup=False,
+                    )
+                    self.hidden_states_buffer.copy_(hidden_states)
+                if mempool is None:
+                    mempool = g.pool()
+
+                self.decode_graphs[bucket_size] = g
+                self.decode_graph_outputs[bucket_size] = (hidden_states, all_layers_hidden_states)
+
+        torch.cuda.current_stream().wait_stream(s)
+        self.is_decode_graphs_captured = True
+
+    def _decode_forward(
+        self,
+        input_ids: torch.LongTensor | None = None,
+        attention_mask: torch.Tensor | None = None,
+        position_ids: torch.LongTensor | None = None,
+        past_key_values: Cache | None = None,
+        inputs_embeds: torch.FloatTensor | None = None,
+        use_cache: bool | None = None,
+        cache_position: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+    ):
+
+        self.cache_seqlens += 1
+        self.cache_seqlens_len += 1
+        self.position_ids_buffer.copy_(position_ids[1:])
+        if self.layer_stats is not None:
+            self.layer_stats.begin_decode_step(self.cache_seqlens_len)
+
+        if not self.is_decode_graphs_captured and self.using_cudagraph:
+            self._capture_all_decode_graphs()
+
+        target_bucket = self.bucket_upper_bounds[-1]
+        for upper_bound in self.bucket_upper_bounds:
+            if self.cache_seqlens_len <= upper_bound:
+                target_bucket = upper_bound
+                break
+
+        try:
+            if not self.using_cudagraph:
+                hidden_states, all_layers_hidden_states = self._decode_layers(
+                    inputs_embeds,
+                    position_ids[1:],
+                    target_bucket,
+                )
+            else:
+                self.hidden_states_buffer.copy_(inputs_embeds)
+                self.decode_graphs[target_bucket].replay()
+                hidden_states, all_layers_hidden_states = self.decode_graph_outputs[target_bucket]
+        finally:
+            if self.layer_stats is not None:
+                self.layer_stats.end_decode_step()
+
+        return BaseModelOutputWithPast(
+            last_hidden_state=hidden_states,
+            past_key_values=None,
+            all_layers_hidden_states=all_layers_hidden_states,
+        )
+
+    def _prefill_graph_forward(self, seq_len, is_warmup=False):
+        """Graph-captured forward for layers [num_deepstack_layers, ..., last] + norm.
+        Reads from prefill static buffers, returns norm output (address fixed after capture)."""
+        hidden_states = self.prefill_hs_buffer[:, :seq_len, :]
+        position_embeddings = (self.prefill_pe_cos_buffer[:, :seq_len, :], self.prefill_pe_sin_buffer[:, :seq_len, :])
+        prefill_bucket = ((seq_len + 127) // 128) * 128 + 100000  # +100000 区分 decode bucket # TODO, 不够优雅，删除
+
+        for layer_idx in range(self.num_deepstack_layers, len(self.layers)):
+            hidden_states = self.layers[layer_idx](
+                hidden_states,
+                position_ids=None,
+                attention_mask=None,
+                past_key_values=None,
+                cache_position=None,
+                position_embeddings=position_embeddings,
+                is_decoding=False,
+                attn_k_cache=self.attn_kv_cache[layer_idx][0],  # TODO: 这个 kv 的 layout 是不是有问题
+                attn_v_cache=self.attn_kv_cache[layer_idx][1],
+                cache_seqlens=self.cache_seqlens,
+                cg_bucket_size=prefill_bucket,
+                is_warmup=is_warmup,
+            )
+
+        # return self.norm(hidden_states, decode=False, inplace=False, cg_bucket_size=prefill_bucket, is_warmup=is_warmup)
+        # 上面注释 self.norm 是因为 RMSNorm.weight 已经融合到 lm_head.weight 中了
+        # 下面注释掉是因为 fused_1d_rmsnorm 可以视为一个线性操作，self.lm_head 没有 bias
+        # return fused_1d_rmsnorm(hidden_states[:, -1:], weight=None, inplace=False, eps=self.norm.variance_epsilon)  # 这里不需要全量的，只需要最后一个 token 的
+        return hidden_states
+
+    def _capture_all_prefill_graphs(self):
+        if self.prefill_graphs_captured:
+            return
+
+        print(f"[PrefillCUDAGraph] pre-capturing {len(self.prefill_graph_seq_lens)} seq_lens: {self.prefill_graph_seq_lens[0]}~{self.prefill_graph_seq_lens[-1]}")
+
+        s = torch.cuda.Stream()
+        s.wait_stream(torch.cuda.current_stream())
+        mempool = None
+
+        with torch.cuda.stream(s):
+            for seq_len in self.prefill_graph_seq_lens:
+                # warmup: resolve autotuners + JIT
+                for _ in range(3):
+                    self._prefill_graph_forward(seq_len, is_warmup=True)
+
+                g = torch.cuda.CUDAGraph()
+                with torch.cuda.graph(g, pool=mempool):
+                    out = self._prefill_graph_forward(seq_len, is_warmup=False)
+                if mempool is None:
+                    mempool = g.pool()
+
+                self.prefill_graphs[seq_len] = (g, out)
+
+        torch.cuda.current_stream().wait_stream(s)
+        self.prefill_graphs_captured = True
+        print(f"[PrefillCUDAGraph] all {len(self.prefill_graphs)} graphs captured!")
+
+    def _prefill_forward(self, hidden_states, position_ids, deepstack_visual_embeds, visual_pos_idx):
+
+        # hidden_states: [1, 690, 2048]
+        # position_ids: [4, 1, 690]
+        # deepstack_visual_embeds [672, 2048]、[672, 2048]、[672, 2048]
+        # visual_pos_idx: [672] [672]
+
+        all_layers_hidden_states = None
+        if not self.prefill_graphs_captured and self.using_cudagraph:
+            self._capture_all_prefill_graphs()
+
+        self.cache_seqlens[:] = 0
+        seq_len = hidden_states.shape[1]
+        if self.layer_stats is not None:
+            self.layer_stats.maybe_begin_sample(seq_len)
+        position_embeddings = self.rotary_emb(position_ids[1:], is_decoding=False, buffer4decode=None, device_type=hidden_states.device.type, dtype=hidden_states.dtype)
+
+        # --- Phase 1: first N layers eager (deepstack += ) ---
+        for layer_idx in range(self.num_deepstack_layers):
+            hidden_states = self.layers[layer_idx](
+                hidden_states,
+                position_ids=None,
+                attention_mask=None,
+                past_key_values=None,
+                cache_position=None,
+                position_embeddings=position_embeddings,
+                is_decoding=False,
+                attn_k_cache=self.attn_kv_cache[layer_idx][0],
+                attn_v_cache=self.attn_kv_cache[layer_idx][1],
+                cache_seqlens=self.cache_seqlens,
+                layer_stats_collector=self.layer_stats,
+            )
+            if deepstack_visual_embeds is not None and layer_idx < len(deepstack_visual_embeds):
+                hidden_states[visual_pos_idx] += deepstack_visual_embeds[layer_idx]
+
+        # --- Phase 2: remaining layers + norm ---
+        if seq_len in self.prefill_graphs and self.using_cudagraph:
+            # CUDA Graph path: copy to static buffers, replay, read output
+            cos, sin = position_embeddings
+            self.prefill_hs_buffer[:, :seq_len, :].copy_(hidden_states)
+            self.prefill_pe_cos_buffer[:, :seq_len, :].copy_(cos)
+            self.prefill_pe_sin_buffer[:, :seq_len, :].copy_(sin)
+
+            graph, output_ref = self.prefill_graphs[seq_len]
+            graph.replay()
+            hidden_states = output_ref
+        else:
+            # Eager fallback for seq_len not in graph set
+            for layer_idx in range(self.num_deepstack_layers, len(self.layers)):
+                hidden_states = self.layers[layer_idx](
+                    hidden_states,
+                    position_ids=None,
+                    attention_mask=None,
+                    past_key_values=None,
+                    cache_position=None,
+                    position_embeddings=position_embeddings,
+                    is_decoding=False,
+                    attn_k_cache=self.attn_kv_cache[layer_idx][0],
+                    attn_v_cache=self.attn_kv_cache[layer_idx][1],
+                    cache_seqlens=self.cache_seqlens,
+                    layer_stats_collector=self.layer_stats,
+                )
+            # hidden_states = self.norm(hidden_states, decode=False, inplace=False)
+            # 上面注释 self.norm 是因为 RMSNorm.weight 已经融合到 lm_head.weight 中了
+            # 下面注释掉是因为 fused_1d_rmsnorm 可以视为一个线性操作，self.lm_head 没有 bias
+            # hidden_states = fused_1d_rmsnorm(hidden_states[:, -1:], weight=None, inplace=False, eps=self.norm.variance_epsilon)
+
+        self.cache_seqlens_len = seq_len
+
+        return BaseModelOutputWithPast(
+            last_hidden_state=hidden_states,
+            past_key_values=None,
+            all_layers_hidden_states=all_layers_hidden_states,
+        )
+
+    def record_layer_stats_token(self, next_tokens, all_layers_hidden_states, final_hidden_states, lm_head_weight, token_id_map):
+        if self.layer_stats is None:
+            return
+        self.layer_stats.record_generated_token(
+            next_tokens=next_tokens,
+            all_layers_hidden_states=all_layers_hidden_states,
+            final_hidden_states=final_hidden_states,
+            lm_head_weight=lm_head_weight,
+            token_id_map=token_id_map,
+        )
+
+    def end_layer_stats_sample(self, generated_tokens: int | None = None):
+        if self.layer_stats is not None:
+            self.layer_stats.end_sample(generated_tokens=generated_tokens)
+
+    @capture_outputs
+    def forward(
+        self,
+        input_ids: torch.LongTensor | None = None,
+        attention_mask: torch.Tensor | None = None,
+        position_ids: torch.LongTensor | None = None,
+        past_key_values: Cache | None = None,
+        inputs_embeds: torch.FloatTensor | None = None,
+        use_cache: bool | None = None,
+        cache_position: torch.LongTensor | None = None,
+        is_decoding: bool = False,
+        # args for deepstack, ONLY FOR PREFILL
+        visual_pos_masks: torch.Tensor | None = None,
+        deepstack_visual_embeds: list[torch.Tensor] | None = None,
+    ) -> tuple | BaseModelOutputWithPast:
+
+        if is_decoding:
+            return self._decode_forward(position_ids=position_ids, inputs_embeds=inputs_embeds)
+
+        visual_pos_idx = torch.nonzero(visual_pos_masks, as_tuple=True)
+        return self._prefill_forward(inputs_embeds, position_ids, deepstack_visual_embeds, visual_pos_idx)

@@ -1,0 +1,22 @@
+# Submission dependency plan:
+# - Use direct remote torch/triton/torchvision wheels from the same aiext mirror
+#   as flash-attn/acext, so the submission does not need to bundle ~590 MB.
+# - Use direct remote flash-attn wheel. Do not use the small selector sdist:
+#   it imports torch during metadata generation and fails in a single clean
+#   `pip install -r requirements.txt` flow.
+# - Keep acext remote, not bundled locally; the wheel is about 531 MB. Use the
+#   direct wheel URL, not the selector sdist, for the same reason as flash-attn.
+--index-url https://mirrors.aliyun.com/pypi/simple
+
+https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/generic/torch/2.9.0%2Bppu2.0.0.oe/torch-2.9.0%2Bcu129ubuntu2404oe-cp312-cp312-linux_x86_64.whl
+https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/generic/triton/3.5.0%2Bppu2.0.0.oe/triton-3.5.0%2Bcu129ubuntu2404oe-cp312-cp312-linux_x86_64.whl
+https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/generic/torchvision/0.24.0%2Bppu2.0.0.ce/torchvision-0.24.0%2Bcu129torch2.9.0ubuntu2404ce-cp312-cp312-linux_x86_64.whl
+https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/generic/flash_attn/2.7.4.post1%2Bppu2.0.0/flash_attn-2.7.4.post1%2Bcu129torch2.9.0ubuntu2404oe-cp312-cp312-linux_x86_64.whl
+https://aiext-pypi.mirrors.aliyuncs.com/pg1-pip/generic/acext/1.0.0%2Bppu2.0.0.oe/acext-1.0.0%2Bcu129torch2.9.0ubuntu2404oe-cp312-cp312-linux_x86_64.whl
+
+numpy==1.26.4
+einops==0.8.2
+pillow==12.2.0
+tqdm==4.67.3
+psutil==7.2.2
+ninja==1.13.0

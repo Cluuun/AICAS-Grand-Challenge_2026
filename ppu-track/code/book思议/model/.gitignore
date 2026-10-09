@@ -1,0 +1,8 @@
+runs/
+__pycache__/
+.ipynb_checkpoints/
+router_model.json
+router_model.bin
+router_model.pth
+router_model.pkl
+*.tmp

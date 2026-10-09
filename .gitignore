@@ -1,0 +1,15 @@
+# 大文件
+*.zip
+*.pt
+*.safetensors
+*.so
+*.pdf
+
+# 系统文件
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

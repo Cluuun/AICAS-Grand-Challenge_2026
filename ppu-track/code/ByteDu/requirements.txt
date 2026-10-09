@@ -1,0 +1,23 @@
+# Runtime dependencies pinned from the current verified environment.
+# Python: 3.12.3
+# Torch CUDA runtime: 12.9
+
+# Core inference stack
+torch==2.8.0
+# Current env metadata is 3.4.0+gitd427786a; pin the base release for pip compatibility.
+triton==3.4.0
+# Required at runtime: evaluation_wrapper.py and minimal_qwen3_vl.py import flash_attn directly.
+# flash-attn==2.7.4.post1
+transformers==4.57.0
+safetensors==0.7.0
+
+# Benchmark / data pipeline
+datasets==4.8.5
+numpy==2.2.6
+Pillow==12.1.0
+tqdm==4.67.1
+psutil==7.2.2
+scikit-learn==1.8.0
+
+# Optional for first-time local model download; not imported during evaluation.
+# huggingface-hub==0.36.2

@@ -1,0 +1,47 @@
+PyTorch: 2.8.0+cu128
+CUDA:    12.8
+GPU:     NVIDIA GeForce RTX 4070 SUPER
+Arch:    sm_89
+TORCH_CUDA_ARCH_LIST: 8.0+PTX
+[1/4] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output sm_profiler.cuda.o.d -DTORCH_EXTENSION_NAME=qwen3vl_megaqwen_v150a -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1018\" -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /home/howard/anaconda3/envs/AICASGC_official/include/python3.12 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_80,code=compute_80 -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 --use_fast_math --ptxas-options=-v -std=c++17 -I/home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch -c /home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch/sm_profiler.cu -o sm_profiler.cuda.o 
+ptxas info    : 0 bytes gmem
+[2/4] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output qwen3vl_megaqwen_v150a.cuda.o.d -DTORCH_EXTENSION_NAME=qwen3vl_megaqwen_v150a -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1018\" -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /home/howard/anaconda3/envs/AICASGC_official/include/python3.12 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_80,code=compute_80 -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 --use_fast_math --ptxas-options=-v -std=c++17 -I/home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch -c /home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch/csrc/qwen3vl_megaqwen_v150a.cu -o qwen3vl_megaqwen_v150a.cuda.o 
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z15ldg_update_stepPKiPiS1_S1_S1_' for 'sm_80'
+ptxas info    : Function properties for _Z15ldg_update_stepPKiPiS1_S1_S1_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 18 registers, used 0 barriers, 392 bytes cmem[0]
+ptxas info    : Compile time = 1.834 ms
+ptxas info    : Compiling entry function '_Z18ldg_lm_head_phase2PKfPKiPii' for 'sm_80'
+ptxas info    : Function properties for _Z18ldg_lm_head_phase2PKfPKiPii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 1 barriers, 8192 bytes smem, 380 bytes cmem[0]
+ptxas info    : Compile time = 2.528 ms
+ptxas info    : Compiling entry function '_Z18ldg_lm_head_phase1PKfPK6__halfPfPi' for 'sm_80'
+ptxas info    : Function properties for _Z18ldg_lm_head_phase1PKfPK6__halfPfPi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 36 registers, used 1 barriers, 8256 bytes smem, 384 bytes cmem[0]
+ptxas info    : Compile time = 11.147 ms
+ptxas info    : Compiling entry function '_Z18ldg_lm_head_logitsPKfPK6__halfPf' for 'sm_80'
+ptxas info    : Function properties for _Z18ldg_lm_head_logitsPKfPK6__halfPf
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 38 registers, used 1 barriers, 8192 bytes smem, 376 bytes cmem[0]
+ptxas info    : Compile time = 7.667 ms
+ptxas info    : Compiling entry function '_Z17ldg_decode_kerneliPK6__halfPK15LDGLayerWeightsS1_S1_S1_PS_S5_S5_PfS6_S6_S6_S6_S6_S6_S6_S6_S6_S6_iiiPKiS8_ifPmPjSA_SA_SA_' for 'sm_80'
+ptxas info    : Function properties for _Z17ldg_decode_kerneliPK6__halfPK15LDGLayerWeightsS1_S1_S1_PS_S5_S5_PfS6_S6_S6_S6_S6_S6_S6_S6_S6_S6_iiiPKiS8_ifPmPjSA_SA_SA_
+    24 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 80 registers, used 1 barriers, 24 bytes cumulative stack size, 36160 bytes smem, 592 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compile time = 406.424 ms
+ptxas info    : Function properties for _Z13ldg_attentionR14AtomicGridSyncPKfPK6__halfS5_PfS6_S6_S6_iifS5_S5_S5_S5_PjiPmb
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _Z14ldg_matvec_qkvR14AtomicGridSyncPK6__halfS3_S3_S3_S3_PfS4_S4_S4_S4_S3_S3_Pmb
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _Z22ldg_qk_norm_rope_cacheR14AtomicGridSyncPfS1_PKfPK6__halfS6_S6_S6_PS4_S7_iiS6_PjS8_iPmb
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Function properties for _Z23ldg_o_proj_postnorm_mlpR14AtomicGridSyncPK6__halfS3_S3_S3_S3_PKfPfS6_S6_PS1_S3_S3_S3_bPmb
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+[3/4] c++ -MMD -MF torch_bindings_v150a.o.d -DTORCH_EXTENSION_NAME=qwen3vl_megaqwen_v150a -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1018\" -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include -isystem /home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /home/howard/anaconda3/envs/AICASGC_official/include/python3.12 -fPIC -std=c++17 -O3 -std=c++17 -I/home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch -c /home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch/csrc/torch_bindings_v150a.cpp -o torch_bindings_v150a.o 
+[4/4] c++ qwen3vl_megaqwen_v150a.cuda.o torch_bindings_v150a.o sm_profiler.cuda.o -shared -L/home/howard/anaconda3/envs/AICASGC_official/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/usr/local/cuda/lib64 -lcudart -o qwen3vl_megaqwen_v150a.so
+Build succeeded
+Extension: /home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch/build/qwen3vl_megaqwen_v150a.so
+Copied to: /home/howard/Workspace/AICASGC/my_kernel/versions/v150a_block512_allsm_attention_noprefetch/qwen3vl_megaqwen_v150a.cpython-312-x86_64-linux-gnu.so

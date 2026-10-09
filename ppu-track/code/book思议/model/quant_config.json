@@ -1,0 +1,9 @@
+{
+    "int4_layers": [
+        12,
+        13,
+        14,
+        15
+    ],
+    "description": "Minimal INT4: layers 12-15 only"
+}

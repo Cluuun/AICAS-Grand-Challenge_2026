@@ -1,0 +1,14 @@
+{
+  "kind": "ls_residual_lowrank",
+  "rank": 128,
+  "source_layer": 18,
+  "target_layer": 23,
+  "ridge": 0.0001,
+  "ridge_lambda": 0.003954091262817383,
+  "base_affine": "layer_stats/steering_all_layers_calib500_decode64/vectors/decode_skip_18_23_ls_affine.pt",
+  "rms_regression": {
+    "w": 1.0372612476348877,
+    "b": 21.795516967773438,
+    "source_target_corr": 0.21648065745830536
+  }
+}

@@ -1,0 +1,1 @@
+python benchmark.py --model-path /root/Qwen3-VL-2B-Instruct --dataset-path /root/data --num-samples 2

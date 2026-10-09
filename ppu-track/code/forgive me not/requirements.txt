@@ -1,0 +1,32 @@
+# AICAS 2026 - 环境依赖
+# ============================================
+
+# 核心框架
+# torch==2.6.0
+transformers==5.2.0
+huggingface_hub==1.14.0
+accelerate>=0.25.0
+# torchvision==0.21.0
+
+# 数据处理
+datasets==4.8.5
+# Pillow>=9.0.0
+
+# 进度条
+# tqdm>=4.65.0
+
+# 系统信息（可选，用于获取详细的硬件信息）
+# psutil>=5.9.0
+
+# 可选：Triton 算子开发
+# triton>=2.1.0
+
+# 可选：Flash Attention（需要 CUDA 编译）
+# flash-attn>=2.0.0
+
+# 可选：量化工具
+# bitsandbytes>=0.41.0
+# auto-gptq>=0.5.0
+
+# 可选：Profiling
+# tensorboard>=2.14.0

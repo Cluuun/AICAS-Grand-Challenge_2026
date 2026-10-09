@@ -1,0 +1,4 @@
+# AICAS 2026 - 额外依赖
+# 评估容器预装 vllm==0.11.1 + torch==2.8.0 + transformers 等，
+# 此处仅列容器中不存在的包。使用 loose pinning 避免冲突。
+datasets>=4.0.0

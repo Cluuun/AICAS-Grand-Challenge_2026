@@ -1,0 +1,640 @@
+{
+  "system_info": {
+    "timestamp": "2026-06-08T22:03:56.215184",
+    "python_version": "3.12.3",
+    "python_full_version": "3.12.3 (main, Jan  6 2026, 19:30:31) [GCC 13.3.0]",
+    "torch_version": "2.8.0",
+    "cuda_available": true,
+    "cuda_version": "12.9",
+    "cudnn_version": "8905",
+    "gpu_count": 1,
+    "gpu_name": "PPU-ZW810E",
+    "gpu_memory_gb": 96.0,
+    "gpu_compute_capability": "8.0",
+    "cpu_processor": "x86_64",
+    "cpu_count_physical": 11,
+    "cpu_count_logical": 11,
+    "cpu_freq_mhz": 2800.0,
+    "cpu_model": "Intel(R) Xeon(R) Processor",
+    "platform_system": "Linux",
+    "platform_release": "5.10.134-013.7.2.kangaroo.al8.x86_64",
+    "platform_version": "#1 SMP Sat Feb 28 03:27:43 UTC 2026",
+    "platform_machine": "x86_64",
+    "platform_architecture": "64bit",
+    "ppu_available": true,
+    "ppu_info": {
+      "name": "PPU-ZW810E",
+      "type": "detected_from_gpu_name"
+    },
+    "gpu_driver_version": "2.0.0-2e1b14",
+    "gpu_memory_total": "98304 MiB",
+    "memory_total_gb": 100.0,
+    "memory_available_gb": 89.83
+  },
+  "performance": {
+    "avg_ttft_ms": 16.63,
+    "avg_throughput_tokens_per_sec": 340.19
+  },
+  "answers": [
+    {
+      "question_id": 34602,
+      "prediction": "Based on the text visible on the camera in the image, the brand of this camera is **Dakota Digital**.\n\nThis is clearly written on the top left of the camera's body. The camera is also labeled as a \"Single-Use Camera\" and has a \"Pure Digital\" logo on the lower left.!"
+    },
+    {
+      "question_id": 34603,
+      "prediction": "Based on the image provided, the small white text located below the main title \"DRUPALCON\" and above the word \"COPENHAGEN\" spells out the city's name.\n\nThe text reads:\n```\nCOPENHAGEN\n```\n\nTherefore, the small white text spells **COPENHAGEN**.!"
+    },
+    {
+      "question_id": 34604,
+      "prediction": "Based on the label on the bottle in the image, this is a **Sublimely Self-Righteous Ale**.\n\nHere are the details from the label:\n\n-   **Brewery:** The label shows the name \"STONE\" at the top, which is likely the brewery.\n-   **Style:** The beer is an **Ale**.\n-   **Name:** The name \"Sublimely Self-Righteous\" is written in a stylized font.\n-   **Bottle Design:** The label features a black-and-white illustration of a muscular, demonic-looking figure, which is a common theme in the \"Demonic\" or \"Devil\" beer subculture.\n\nThe beer is a **self-righteous ale**, which is a style of ale that is often associated with a strong, bold, and sometimes aggressive character. The name \"Sublimely Self-Righteous\" suggests a beer that is both bold and self-assertive.!"
+    },
+    {
+      "question_id": 34605,
+      "prediction": "Based on the image provided, the brand of liquor on the right is **Bowmore**.\n\nThe bottle on the right is a **Bowmore Islay Single Malt Scotch Whisky**. The label clearly shows the brand name \"BOWMORE\" in large, gold lettering at the top. It is also described as a \"Single Malt Scotch Whisky\" and is a \"Non Chill Filtered\" release.!"
+    },
+    {
+      "question_id": 34606,
+      "prediction": "Based on the information visible on the bottle of whisky on the right, we can determine its aging period.\n\nThe label on the bottle reads:\n- **Aged 10 years**\n\nThis indicates that the whisky has been aged for 10 years.\n\nTherefore, the drink on the right has been aged for **10 years**.!"
+    },
+    {
+      "question_id": 34607,
+      "prediction": "Based on the image provided, the number on the player's jersey is **23**.\n\nThis is clearly visible on the front of his white uniform, just below the red stripe on his pants.!"
+    },
+    {
+      "question_id": 34608,
+      "prediction": "Based on the image provided, we can determine the time by examining the watch's hands and markings.\n\n-   The **hour hand** is pointing just past the 5, indicating the hour is 5.\n-   The **minute hand** is pointing at the 4, which represents 20 minutes.\n-   The **second hand** is pointing at the 12, which indicates 0 seconds.\n\nTherefore, the time displayed on the watch is **5:20:00**.!"
+    },
+    {
+      "question_id": 34609,
+      "prediction": "Based on the details visible on the watch face, the brand is **Audemars Piguet**.\n\nThis is a luxury watch brand known for its high-end timepieces, and this particular model is the **Audemars Piguet Royal Oak Offshore Chronograph**. The key identifying features are:\n\n- The **\"AP\"** logo in the center of the dial.\n- The **\"RICHARD\"** text, which is a signature of the Royal Oak collection.\n- The **\"Royal Oak Offshore\"** name, which is a specific model line.\n- The **chronograph** function, indicated by the three sub-dials and the pushers on the side of the case.\n\nThe watch is a very rare and highly sought-after model, known for its distinctive design and craftsmanship.!"
+    },
+    {
+      "question_id": 34610,
+      "prediction": "Based on the provided image, the person at the center of the diagram is **Brian O'Leary**.\n\nThis is indicated by the text on the whiteboard, which shows:\n- A note that says \"Brian O'Leary\" is at the center of the diagram.\n- A small drawing of a person with a hat, which is labeled \"Brian O'Leary\" in the center of the diagram.\n- The diagram is titled \"The Center of All of This,\" and the central figure is the one who is the focus of the entire network of connections.!"
+    },
+    {
+      "question_id": 34611,
+      "prediction": "Based on the image provided, the photographer is identified in the bottom-left corner by a copyright notice.\n\nThe text in the bottom-left corner reads:\n```\n© Gleamlight / Philippe Molitor\n```\n\nTherefore, the photographer is **Philippe Molitor**.!"
+    },
+    {
+      "question_id": 34612,
+      "prediction": "Based on the image provided, the switches are in the **\"OFF\"** position.\n\nHere's the reasoning:\n- The image shows three switches, all of which are labeled \"OFF\".\n- The switches are in a vertical, off position, meaning they are not turned on.\n- The switches are all in the same state, and the \"OFF\" label is clearly visible on each one.!"
+    },
+    {
+      "question_id": 34613,
+      "prediction": "Based on the image provided, the candy bar located at the bottom of the snow is a **Hershey's** bar.\n\nThe text on the candy bar is clearly visible and reads \"HERSHEY'S\" in large, bold letters. The bar is also partially covered in snow, and it is positioned in the foreground, just above the other items on the table.!"
+    },
+    {
+      "question_id": 34614,
+      "prediction": "Based on the image provided, the sign on the farthest right window reads:\n\n**BUD LIGHT**\n\nThis is a large, illuminated sign with the words \"BUD LIGHT\" in white capital letters on a blue background. It is located in the upper right portion of the window.!"
+    },
+    {
+      "question_id": 34615,
+      "prediction": "Based on the sign visible in the image, a can of Skoal costs $3.82.\n\nThis is indicated by the red sign in the upper left corner of the store window, which lists the prices for various drinks. The sign shows:\n- 455: $4.52\n- Skoal: $3.82\n- 316: $3.16\n- 185: $1.85\n\nTherefore, the price for a can of Skoal is $3.82.!"
+    },
+    {
+      "question_id": 34616,
+      "prediction": "Yes, the sign in the image is for Denny's. The name \"Denny's\" is clearly visible in red lettering on a yellow background, which is the iconic branding of the restaurant chain.!"
+    },
+    {
+      "question_id": 34617,
+      "prediction": "Based on the image provided, the letters on the sign are **red**.!"
+    },
+    {
+      "question_id": 34618,
+      "prediction": "Based on the image provided, the bottle with the red label is **Jim Beam**.\n\nYou can identify it by the following features:\n- The label is predominantly red and white.\n- The brand name \"JIM BEAM\" is clearly visible in large, white capital letters on the label.\n- The bottle is a classic, recognizable shape for this brand, which is a well-known American bourbon whiskey.!"
+    },
+    {
+      "question_id": 34619,
+      "prediction": "Based on the image provided, there are two prominent percentages shown on the posters.\n\n-   **In the top right corner of the image**, a large orange circle with the text \"0%\" is visible. This is likely a discount or price reduction.\n-   **On the poster for \"THE HULK BUSTER 2\"**, there is a large red banner that says \"5%\". This is a promotional offer.\n\nTherefore, the percentages shown on the posters are **0%** and **5%**.!"
+    },
+    {
+      "question_id": 34620,
+      "prediction": "Based on the image provided, we can determine the number of items available for $5 by examining the price tags on the shelves.\n\n- The price tags are located on the top shelf, which displays various cake mixes.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $2.39.\n- The price tags for the cake mixes are clearly marked with a price of $2.39, $2.45, and $"
+    },
+    {
+      "question_id": 34621,
+      "prediction": "Based on the image provided, there are **4** price tags on the bottom shelf.\n\nHere is a breakdown of the visible price tags on the bottom shelf:\n\n- **Leftmost**: A yellow price tag with a red border showing the price `$2.97`.\n- **Second from the left**: A yellow price tag with a red border showing the price `$2.97`.\n- **Third from the left**: A yellow price tag with a red border showing the price `$2.97`.\n- **Rightmost**: A yellow price tag with a red border showing the price `$2.97`.\n\nThese are the four price tags visible on the bottom shelf.!"
+    },
+    {
+      "question_id": 34622,
+      "prediction": "Based on the image provided, one of the brands being advertised is **YAMAHA**.\n\nThis is clearly visible on a large white banner in the stands, located to the right of the central green bottle. The text on the banner reads \"YAMAHA\" in large, red letters.!"
+    },
+    {
+      "question_id": 34623,
+      "prediction": "Based on the yellow timestamp in the bottom right corner of the image, the photo was taken on **February 14, 2012**.!"
+    },
+    {
+      "question_id": 34624,
+      "prediction": "Based on the visual evidence in the image, this is a **MacBook**.\n\nHere are the key details that lead to this conclusion:\n\n-   **Brand and Model:** The word \"MacBook\" is clearly visible in yellow text on the lower bezel of the laptop, just above the keyboard.\n-   **Keyboard Layout:** The screen displays a \"Select Your Keyboard\" dialog box, which is a common feature of Apple's macOS operating system. The dialog box shows the option for \"H1 Canadian English,\" which is a standard keyboard layout for the MacBook.\n-   **Design:** The laptop has a distinctive silver-colored body, a thin profile, and a specific design that is characteristic of Apple's MacBook line, particularly the older models.\n\nTherefore, the computer in the image is a MacBook.!"
+    },
+    {
+      "question_id": 34625,
+      "prediction": "Based on the image provided, the screen is showing a setup or language selection dialog box for a computer, likely a MacBook, as indicated by the \"MacBook\" logo on the bottom bezel.\n\nThe text on the screen says:\n\n- \"Choose a keyboard layout, then click Continue.\"\n- \"H1: Canadian English\"\n\nThe screen is prompting the user to select a keyboard layout, which is a type of input method for typing. The user is then asked to click the \"Continue\" button to proceed with the setup.\n\nTherefore, the screen says to **choose a keyboard layout** and then **click Continue**.!"
+    },
+    {
+      "question_id": 34626,
+      "prediction": "Based on the image provided, the yellow sticker on the refrigerator has the following text at the top:\n\n- **WARNING**\n- **DO NOT OPEN**!"
+    },
+    {
+      "question_id": 34627,
+      "prediction": "Based on the image provided, the calendar on the refrigerator door has a date range that includes the year 2014.\n\nThe calendar shows the month of January, and the dates are from the 1st to the 29th. The year is not explicitly written on the calendar itself, but the text \"2014\" is visible in the bottom right corner of the calendar.\n\nTherefore, the year on the calendar is **2014**.!"
+    },
+    {
+      "question_id": 34628,
+      "prediction": "Based on the image provided, the runner on the left is **Willis**.\n\nThis is indicated by the name \"WILLIS\" printed on his orange athletic shirt, which is visible on the bib.!"
+    },
+    {
+      "question_id": 34629,
+      "prediction": "Based on the visual evidence in the image, this event is the **NYC Millrose Games**.\n\nThis can be determined by the prominent blue banner that runs across the foreground of the image. The text on the banner is clearly visible and reads:\n\n- **NYC Millrose Games**\n- **NYC** is an abbreviation for New York City.\n- **Millrose Games** is the name of the event.\n\nThe athletes are also wearing bibs with the name \"WILLIS\" and \"CENTROWITZ\" on them, which are likely the names of the competitors. The setting is a professional track and field event, which is consistent with the Millrose Games.!"
+    },
+    {
+      "question_id": 34630,
+      "prediction": "Based on the text provided in the image, the character who beamed at Harry is **Dumbledore**.\n\nThe relevant passage from the book reads:\n> \"Tell me one last thing,\" said Harry. \"Is this real? Or has this been happening inside my head?\"\n> \n> Dumbledore beamed at him, and his voice sounded loud and strong in Harry's ears even though the bright mist was descending again, obscuring his figure.\n> \n> \"Of course it is happening inside your head, Harry, but why on earth should that mean that it is not real?\"!"
+    },
+    {
+      "question_id": 34631,
+      "prediction": "Based on the text visible in the image, the name of the chapter is **\"King's Cross\"**.\n\nThis is indicated by the title printed in large, capital letters at the top of the page, just below the green cover of the book. The title is also visible in the text itself, which begins with the line: \"Tell me one last thing,\" said Harry. \"Is this real? Or has this been happening inside my head?\"!"
+    },
+    {
+      "question_id": 34632,
+      "prediction": "Based on the text visible on the book in the image, the author is **Gioconda Belli**.\n\nThis is clearly written on the cover of the book, which is titled \"Páginas de las primeras\" (Pages of the First). The book is part of the \"Tienda de Libros\" (Bookstore) collection, which is a bookstore in Peralta, Argentina.!"
+    },
+    {
+      "question_id": 34633,
+      "prediction": "Based on the visual evidence in the image, yes, these are bottles of Pepsi.\n\nHere are the key details that confirm this:\n\n-   **Logo:** The iconic Pepsi logo is clearly visible on each bottle. It consists of a red and blue circle with a white swoosh, and the word \"pepsi\" written in white lowercase letters below it.\n-   **Color Scheme:** The bottles are predominantly blue, which is the classic color of the Pepsi brand.\n-   **Text:** The word \"pepsi\" is printed in white on the blue label, which is the standard branding for the product.\n\nThe image shows multiple bottles in a row, all with the same branding, which is consistent with a retail display of Pepsi products.!"
+    },
+    {
+      "question_id": 34634,
+      "prediction": "Based on the information on the book's cover, the book was edited by:\n\n- Jeff Vandermeer\n- Mark Roberts\n\nThis is clearly stated on the cover, just below the title.!"
+    },
+    {
+      "question_id": 34635,
+      "prediction": "Based on the image provided, the time displayed on the smartwatch is **13:57**.!"
+    },
+    {
+      "question_id": 34636,
+      "prediction": "Based on the text displayed on the screen of the smartwatch, the screen name being shown is **@mediaczar**.\n\nThis is visible in the message, which reads:\n> New mention by @mediaczar\n> @aden_76 yes, I started saying \"mention\" but\n\nThe user who sent the message is identified as @mediaczar.!"
+    },
+    {
+      "question_id": 34637,
+      "prediction": "Based on the text visible in the middle artwork, the picture says:\n\n**\"MY OTHER RIDE IS YOUR MOM\"**\n\nThis is a humorous and affectionate statement, suggesting that the person riding the motorcycle is not just a \"ride\" but also a mother, and that the \"other ride\" is their mother.!"
+    },
+    {
+      "question_id": 34638,
+      "prediction": "Based on the image provided, the lowest number yard line visible is **30**.\n\nThis can be seen on the green field in the foreground, just above the football players. The number \"30\" is clearly marked on the turf, and it is located at the bottom of the image, near the end zone.!"
+    },
+    {
+      "question_id": 34639,
+      "prediction": "based on the image provided, the word handwritten on the sign is \"jesus\".!"
+    },
+    {
+      "question_id": 34640,
+      "prediction": "Based on the text visible in the image, the title of the book is **\"THE CLOISTERS WETLAND\"**.\n\nThis is the most prominent text at the top of the page, displayed in a large, blue font.!"
+    },
+    {
+      "question_id": 34641,
+      "prediction": "Based on the image provided, the runner in the lead is the one in the foreground, wearing a black tank top and black shorts.\n\nThe number on his race bib is **57859**.\n\nThe runner in the lead is **57859**.!"
+    },
+    {
+      "question_id": 34642,
+      "prediction": "Based on the image provided, the runner in the middle is wearing a race bib with the number **57859** on it.\n\nThis number is visible on the front of his black tank top, just below the red \"money\" logo.!"
+    },
+    {
+      "question_id": 34643,
+      "prediction": "Based on the image provided, the ruler is not made in 2002.\n\nThe image shows a black ruler with the text \"2002 T282\" printed on it. This is a label or marking on the ruler itself, not the year it was manufactured. The ruler is a standard metric ruler, and the \"2002\" is likely a date associated with the object or its cataloging, not the year the ruler was made.\n\nTherefore, the ruler was not made in 2002.!"
+    },
+    {
+      "question_id": 34644,
+      "prediction": "Based on the image provided, the ruler has markings for measurements in centimeters (cm) and millimeters (mm). The scale is marked from 0 to 50.\n\nThe largest measurement we can see on this ruler is **50 cm**. This is indicated by the number \"50\" on the right side of the ruler, which is the farthest point from the zero mark.!"
+    },
+    {
+      "question_id": 34645,
+      "prediction": "Based on the text and branding visible on the bottle in the image, the liquor displayed is **English Potato Vodka**.\n\nHere are the key details from the label:\n- **Brand:** Chase\n- **Type:** English Potato Vodka\n- **Alcohol Content:** 40% Vol\n- **Volume:** 70cl (700ml)\n- **Origin:** Grown, distilled and bottled in Herefordshire, England\n\nThe bottle is also decorated with a Union Jack bow tie, which is a common branding element for British spirits.!"
+    },
+    {
+      "question_id": 34646,
+      "prediction": "Based on the text visible on the bottle in the image, the name of the vodka is **Chase**.\n\nThe bottle also clearly states the following details:\n- **Product Type:** English Potato Vodka\n- **Alcohol Content:** 40% Vol\n- **Volume:** 70cl (700ml)\n\nThe name \"Chase\" is written in a large, elegant script on the bottle, and the brand is also visible on the black cap and the red, white, and blue bow tied around the neck.!"
+    },
+    {
+      "question_id": 34647,
+      "prediction": "Based on the image provided, the brand of cigarettes is **Honghe**.\n\nThis is clearly visible on the red cigarette pack in the upper left corner of the image. The brand name \"HONGHE\" is printed in white letters on the red box.!"
+    },
+    {
+      "question_id": 34648,
+      "prediction": "Based on the image provided, there is no gold coin visible. The coins shown are British currency, specifically:\n\n- **One Penny**: This is the smallest coin, made of copper, and is worth 1 pence (1/100 of a pound).\n- **One Pound**: This is the largest coin, made of silver, and is worth 1 pound (100 pence).\n\nThe image shows a collection of these coins, but there is no gold coin present.!"
+    },
+    {
+      "question_id": 34649,
+      "prediction": "Based on the image provided, the copper-colored coin is a **one penny**.\n\nThe coin is worth **1 penny**.\n\nThis is indicated by the text \"ONE PENNY\" clearly visible on the coin. The coin is also the only one in the group that is copper-colored, which is the standard color for a British one penny coin.!"
+    },
+    {
+      "question_id": 34650,
+      "prediction": "Based on the image provided, the license plate has the following text:\n\n-   **Top line:** \"California\" in red cursive script.\n-   **Middle line:** \"FRENCH\" in large, black, block letters.\n-   **Bottom line:** \"PROTECT OUR COAST OCEAN\" in smaller, black, uppercase letters.\n\nThe word on the license plate is **FRENCH**.!"
+    },
+    {
+      "question_id": 34651,
+      "prediction": "Based on the license plate visible in the image, the car is from **California**.\n\nThe license plate clearly displays the word \"California\" in red cursive script at the top. The main text on the plate is \"FRENCH,\" which is the name of the state's 1999-2000 license plate design. The plate also includes the slogan \"PROTECT OUR COAST OCEAN\" and the word \"WYLAND\" at the bottom right, which is the name of the state's coastal region.!"
+    },
+    {
+      "question_id": 34652,
+      "prediction": "Based on the banner in the image, the time next to \"Domingo\" is **19:00 hs**.!"
+    },
+    {
+      "question_id": 34653,
+      "prediction": "Based on the image provided, the blue and purple bill is a **£20** note.\n\nThis is indicated by the text \"Twenty\" and the number \"20\" visible on the bill. The bill also features the portrait of Queen Elizabeth II.!"
+    },
+    {
+      "question_id": 34654,
+      "prediction": "Based on the image provided, the word in the blue bubble at the bottom left is **MARGIN**.\n\nThis is located on the lower-left side of the calculator, just above the \"RATE\" button. The calculator has a label that reads \"BUSINESS\" and \"SELL\" on the left side, and the blue bubble is labeled \"MARGIN\".!"
+    },
+    {
+      "question_id": 34655,
+      "prediction": "Based on the image provided, the player looking at the children is wearing a blue baseball uniform with the number **9** on the back of his jersey.\n\nThe player is standing on the left side of the image, facing the children and the other player. He is wearing a blue cap with a red brim, and his jersey has the number 9 in white with a blue outline.!"
+    },
+    {
+      "question_id": 34656,
+      "prediction": "Based on the advertisements visible in the background of the image, one of the sponsors is **York**.\n\nThis is indicated by the large white sign on the left side of the outfield wall, which has the word \"YORK\" in bold, black letters. The sign also features a blue star logo and the text \"Since 1950\".!"
+    },
+    {
+      "question_id": 34657,
+      "prediction": "Based on the image provided, the text written on the man's shirt is:\n\n**LIFE CYCLE**\n**End All**!"
+    },
+    {
+      "question_id": 34658,
+      "prediction": "Based on the image provided, the player on the right is wearing a jersey with the number **3** on the back.\n\nThe player is wearing a black and red striped jersey with the number 3 on the back.!"
+    },
+    {
+      "question_id": 34659,
+      "prediction": "Based on the text visible on the jacket worn by the man pointing, the football league is the **Ryman Football League**.\n\nThe name \"Ryman\" is clearly visible on the back of the jacket, which is a sponsor of the team. The full name on the jacket is \"Ryman Football League\" and \"macron\" is also visible, which is likely a sponsor of the team as well.!"
+    },
+    {
+      "question_id": 34660,
+      "prediction": "Based on the image provided, the coin is a 25-paise coin from India.\n\nThe text on the coin is:\n- **25** (the denomination)\n- **PAISE** (the word for \"paise\" in English)\n- **1984** (the year of minting)\n\nThe coin is made of a silver-colored metal, which is typical for Indian currency.\n\nTherefore, the coin is worth **25 paise**.!"
+    },
+    {
+      "question_id": 34661,
+      "prediction": "Based on the text visible on the coin, the year is **1984**.\n\nThe coin is a 25 Paise coin from India, and the year is inscribed on the lower left side of the coin, just below the number 25. The text is in Devanagari script, which is used for the Indian language Hindi. The coin is also marked with the word \"PAISE\" in English, which is the name of the currency.!"
+    },
+    {
+      "question_id": 34662,
+      "prediction": "Based on the visual evidence in the image, the bottles contain **Corona Extra** beer.\n\nHere are the key details from the image that support this:\n\n- **Bottle Label:** The label on the bottle is clearly visible and reads \"Corona Extra\".\n- **Bottle Shape:** The bottles are standard glass bottles with a specific shape, which is characteristic of the Corona brand.\n- **Bottle Contents:** The liquid inside the bottles is a golden, translucent color, which is consistent with the appearance of Corona Extra beer.\n- **Context:** The bottles are being used as a \"bottle cap\" or \"bottle top\" for a drink, which is a common practice for this type of beverage. The drink is served in a glass with a \"Bubba Gump Shrimp\" logo, which is a popular brand of beer.\n\nTherefore, the bottles contain **Corona Extra beer**.!"
+    },
+    {
+      "question_id": 34663,
+      "prediction": "Based on the images provided, the brand of the bottled drink is **Corona**.\n\nThis is clearly visible on the bottle in the foreground and on the labels of the two glasses. The text \"Corona Extra\" is printed on the bottle and also on the logo on the glasses.!"
+    },
+    {
+      "question_id": 34664,
+      "prediction": "Based on the text visible on the right-hand page of the book, the date is listed at the bottom.\n\nThe date on the text is **1853**.!"
+    },
+    {
+      "question_id": 34665,
+      "prediction": "Based on the image provided, the football player is wearing a jersey with the number **19**.\n\nThis number is prominently displayed in white on the red jersey, just below the helmet.!"
+    },
+    {
+      "question_id": 34666,
+      "prediction": "Based on the image provided, the number on the player's jersey is **19** and it is **white**.!"
+    },
+    {
+      "question_id": 34667,
+      "prediction": "Based on the spines of the books visible in the image, the majority of the comics were made by **Marvel Comics**.\n\nHere's a breakdown of the evidence:\n\n-   **Most of the books** have \"MARVEL\" printed on the spine.\n-   The titles include \"MARVEL\" (e.g., \"MARVEL'S THE AVENGERS\", \"MARVEL'S GUARDIANS OF THE GALAXY\", \"MARVEL'S THE NEW AVENGERS\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE BLACK WIDOW\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE WOLVERINE\", \"MARVEL'S THE W"
+    },
+    {
+      "question_id": 34668,
+      "prediction": "Based on the image provided, the two black Marvel books are:\n\n- **Marvel: The Black Knight** (Volume 1)\n- **Marvel: The Black Knight** (Volume 2)\n\nThe text on the spines of these books is \"MARVEL\" in red, and \"THE BLACK KNIGHT\" in white. The volumes are 1 and 2, respectively.!"
+    },
+    {
+      "question_id": 34669,
+      "prediction": "Based on the image provided, the item being served is **cocoa**.\n\nHere are the details from the image:\n\n-   The illustration is a vintage advertisement for **Fry's Cocoa**.\n-   The boy is holding a tray with two plates.\n-   The plate in the foreground has a **brown, chocolate-like substance** on it, which is the **cocoa**.\n-   The plate in the background has a **white cup** with the words \"Fry's Cocoa\" printed on it.\n-   The text at the top of the image reads, \"Cocoa, Sah!\".\n\nTherefore, the item being served is **cocoa**.!"
+    },
+    {
+      "question_id": 34670,
+      "prediction": "Based on the text visible in the image, the brand of cocoa is **Fry's Cocoa**.\n\nThis is clearly written on the white cup that the boy is holding. The text reads \"Fry's Cocoa\" in a simple, blocky font. The advertisement also features the slogan \"Cocoa, Sah!\" which is a phonetic spelling of \"Cocoa, Sah!\" (a common phrase used in the 1920s and 1930s to promote the product).!"
+    },
+    {
+      "question_id": 34671,
+      "prediction": "Based on the image provided, the books on the shelf are:\n\n- **The Singularity is Near** by Ray Kurzweil\n- **You Are Not a Gadget** by Jaron Lanier\n- **Natural Computing** by Jaron Lanier\n- **Cyberculture & History** (a bookshelf label)\n\nThe book on the far left, **The Singularity is Near**, is written by **Ray Kurzweil**.\n\nThe book in the middle, **You Are Not a Gadget**, is written by **Jaron Lanier**.\n\nThe book on the far right, **Natural Computing**, is also written by **Jaron Lanier**.\n\nTherefore, the authors of the books shown in the image are:\n\n- **Ray Kurzweil**\n- **Jaron Lanier**!"
+    },
+    {
+      "question_id": 34672,
+      "prediction": "Based on the image provided, the text in the bottom right corner of the postcard reads:\n\n**POSTCODE**!"
+    },
+    {
+      "question_id": 34673,
+      "prediction": "Based on the handwriting on the postcard, the congratulations are from the **nls4 team**.\n\nThe postcard has a logo for the \"new kongress exposium\" and the year \"2008\" on it, which is likely the New Kongress Exposium 2008. The text on the postcard reads:\n\n> Congratulations,\n> from the nls4 team.!"
+    },
+    {
+      "question_id": 34674,
+      "prediction": "Based on the image provided, the first name on the list is **WANITA**.\n\nThis is the first entry in the list, which is written in the top-left corner of the whiteboard. The name is written in green marker, and it is listed under the \"NAMA\" (Name) column.!"
+    },
+    {
+      "question_id": 34675,
+      "prediction": "Based on the image provided, the name next to the number 5 is **DEWASA**.\n\nThis is located in the first column of the list, which is labeled \"NAMA\" (Name). The full entry is:\n\n- 5. DEWASA (NAMAMENT)\n- (BERANANG)!"
+    },
+    {
+      "question_id": 34676,
+      "prediction": "Based on the text provided in the image, the 3-letter word to the left of \"casa\" is \"e\".\n\nThe text in the image reads:\n\"...coração se ensoberbeceu, glória se fica em tua casa; e por que...\"\n\nThe word \"casa\" is the 4th word in the sentence, and the word immediately to its left is \"e\".!"
+    },
+    {
+      "question_id": 34677,
+      "prediction": "Based on the labels shown in the image, the wines were made in **2012**.\n\nThis is indicated on the left-hand bottle, which has \"2012\" printed below the \"Chardonnay\" label. The right-hand bottle also has \"12\" printed on it, which is likely the year of the vintage.!"
+    },
+    {
+      "question_id": 34678,
+      "prediction": "Yes, this is a reference book.\n\nThe title of the book is \"The Wordsworth Dictionary of Foreign Words,\" and the cover explicitly states \"WORDSWORTH REFERENCE\" at the top. The subtitle \"An illuminating guide to recherché terms\" further confirms that it is a reference work designed to help with the study of foreign words.!"
+    },
+    {
+      "question_id": 34679,
+      "prediction": "Based on the image provided, the license plate number is **JIBA**.\n\nThis is a California license plate, as indicated by the \"California\" text on the plate. The plate also has a sticker that says \"BURLINGAME\" and a \"SEP\" sticker, which likely indicates the month of registration. The plate is from the year 2019.!"
+    },
+    {
+      "question_id": 34680,
+      "prediction": "Based on the information on the bottle label, the alcohol content is **9.0% ALC./VOL.**\n\nThis is clearly stated on the label, just below the \"Smashed Pumpkin\" name.!"
+    },
+    {
+      "question_id": 34681,
+      "prediction": "Based on the information visible on the bottle label, the name of the ale is **Smashed Pumpkin**.\n\nThis is part of the \"Pugsley's Signature Series\" by Shipyard. The label also indicates it is an \"Ale with Natural Flavor\" and has an alcohol content of 9.0% ALC./VOL.!"
+    },
+    {
+      "question_id": 34682,
+      "prediction": "Based on the image provided, the beer brand in the center of the advertisement is **Coors Light**.\n\nThis is clearly visible in the large blue sign that is the central focus of the billboard. The sign features the brand name \"Coors Light\" in a stylized white font with a black outline, set against a backdrop of a mountain.!"
+    },
+    {
+      "question_id": 34683,
+      "prediction": "Based on the image provided, the company name to the left of the Coors Light logo is **Safeway**.\n\nThis is visible on the large advertisement panel directly to the left of the Coors Light sign. The text \"SAFEWAY Ingredients for life.\" is clearly legible on that panel.!"
+    },
+    {
+      "question_id": 34684,
+      "prediction": "Based on the text visible on the book covers in the image, the USA Today bestselling author is **Cathy Williams**.\n\nThis is clearly stated on both the left and right covers of the book. The title of the book is \"Secrets of a Ruthless Tycoon,\" and the author's name is prominently displayed above the title.!"
+    },
+    {
+      "question_id": 34685,
+      "prediction": "Based on the text visible on the book covers in the image, the name of the bestselling book is:\n\n**Secrets of a Ruthless Tycoon**\n\nThe author's name, Cathy Williams, is also prominently displayed on the cover.!"
+    },
+    {
+      "question_id": 34686,
+      "prediction": "Based on the visual evidence in the image, this food place is selling **German-style food**, specifically **German sausage** and **fries**.\n\nHere are the key details from the image that support this:\n\n- **Sausage**: The signs on the counter clearly list \"Kraenerwurst\" and \"Burenwurst\". These are both types of German sausages.\n- **Fries**: The sign in the upper right corner says \"Hot Dog\" and \"Käse Torte\", which is a type of German cheese cake. The sign also mentions \"Frittes\", which means \"fries\" in German.\n- **Other Items**: The counter has a variety of other food items, including what appears to be a \"Brau\" (beer) and \"Schnitzel\" (a type of schnitzel, a type of fried meat dish), which are common in German cuisine.\n\nTherefore, the food place is selling German sausages, fries, and other traditional German dishes.!"
+    },
+    {
+      "question_id": 34687,
+      "prediction": "Based on the image provided, the sign on the left side of the counter has the following text:\n\n- **Kraenerwurst**\n- **Burenwurst**\n\nThe top word on the sign is **Kraenerwurst**.!"
+    },
+    {
+      "question_id": 34688,
+      "prediction": "Based on the image provided, the man is wearing a blue hoodie with the word \"FOX\" written in large, red letters across the chest. The letters are stylized and appear to be in a bold, blocky font.\n\nThe jacket says **FOX**.!"
+    },
+    {
+      "question_id": 34689,
+      "prediction": "Based on the image provided, the brand with white letters on a red background is **Coca-Cola**.\n\nThis is visible on the red Coca-Cola refrigerator in the background, as well as on the red Coca-Cola bottle on the counter.!"
+    },
+    {
+      "question_id": 34690,
+      "prediction": "Based on the visual evidence in the image, the brand of the diaper area is **Koala Kite**.\n\nThis is clearly visible on the white, plastic diaper changing station mounted on the stainless steel wall. The logo features a cartoon koala and the brand name \"Koala Kite\" written below it.!"
+    },
+    {
+      "question_id": 34691,
+      "prediction": "Based on the image provided, the animal shown on the changing table is a **bear**.\n\nMore specifically, the logo features a brown bear with a small, lighter-colored bear cub on its back. The bear is wearing a blue and white striped hat. The text on the logo reads \"Koala Kite\".!"
+    },
+    {
+      "question_id": 34692,
+      "prediction": "Based on the image provided, the time displayed on the phone is **7:28**. This is shown in the top right corner of the screen, next to the battery level.!"
+    },
+    {
+      "question_id": 34693,
+      "prediction": "Based on the image provided, the book on the top of the pile is **Ariel**.\n\nIt is the first book in the stack, with the title \"Ariel\" printed in black on a light beige background. The cover also features a blue band on the left with the text \"ANDRE MAURIO\" and a small penguin logo on the right.!"
+    },
+    {
+      "question_id": 34694,
+      "prediction": "Based on the image provided, the green book that is second from the bottom is the one with the title **\"The Speaking Eye\"**.\n\nIt is located in the stack, just above the book titled \"Reputation for a Song\". The author is listed as **Edward G. Robinson**.!"
+    },
+    {
+      "question_id": 34695,
+      "prediction": "Based on the image provided, the advertisement on the white board is for **Southern Homes**.\n\nHere are the details of the advertisement:\n- **Company Name:** Southern Homes\n- **Tagline:** \"A Neighbor You Can Trust\"\n- **Logo:** The logo features a red oval with the company name in white text, and a green leafy plant graphic on the right side of the oval.\n\nThe advertisement is located on the right side of the image, next to the \"enterprise.com\" sign.!"
+    },
+    {
+      "question_id": 34696,
+      "prediction": "Based on the image provided, the number for Southern Homes is **648**.\n\nThis is visible on the red oval sign in the upper right portion of the image, which reads \"SOUTHERN HOMES\" and below it, \"A Neighbor You Can Trust\". The number is part of the phone number displayed on the sign.!"
+    },
+    {
+      "question_id": 34697,
+      "prediction": "Based on the image provided, the brand of the bass drum can be identified by looking at the logo on the front of the drum.\n\nThe logo is a white, stylized \"Y\" with the word \"YAMAHA\" written in black capital letters underneath it.\n\nThe brand of the bass drum is **Yamaha**.!"
+    },
+    {
+      "question_id": 34698,
+      "prediction": "Based on the text visible on the cover of the comic book, the name is prominently displayed at the top in large, red, yellow-outlined letters.\n\nThe name of this comic is **Startling Stories**.!"
+    },
+    {
+      "question_id": 34699,
+      "prediction": "Based on the information visible on the cover of the magazine, the novelet titled \"Men Must Die\" was written by **Norman A. Daniels**.\n\nThis is indicated by the text on the cover, which reads:\n- \"FEATURING The Lady is A WITCH An Astonishing Novel By NORMAN A. DANIELS\"\n- \"MEN MUST DIE A Hall of Fame Novelet by WARD HAWKINS\"!"
+    },
+    {
+      "question_id": 34700,
+      "prediction": "Based on the image provided, the clock is a Budweiser-themed wall clock. The time is displayed as follows:\n\n-   The hour hand is positioned between the 8 and the 9, indicating it is past 8 o'clock.\n-   The minute hand is pointing directly at the 6, which represents 30 minutes.\n\nTherefore, the time displayed on the clock is **8:30**.!"
+    },
+    {
+      "question_id": 34701,
+      "prediction": "Based on the image provided, the item in the middle is a **Budweiser-themed wall clock**.\n\nHere are the key details about it:\n\n-   **Brand and Design**: It is a large, circular clock with a prominent Budweiser logo. The logo features the brand name \"BUDWEISER\" in red, a stylized \"A\" with a red star, and an eagle. The text \"1816\" and \"KING OF BEERS\" is also visible.\n-   **Time Display**: The clock has Roman numerals for the hours and is marked with a 60-minute scale, indicating it's a 60-minute clock (or a 12-hour clock with a 60-minute division).\n-   **Features**: The clock has a gold-colored frame and a white face with a decorative border. The hands are silver-colored, and the clock is set to approximately 10:27.\n-   **Context**: It is placed on a shelf, surrounded by other items like a decorative plate, a bottle of alcohol, and a small cup.!"
+    },
+    {
+      "question_id": 34702,
+      "prediction": "Based on the image provided, the first phone number listed on the bottom of the banner is:\n\n- 048 399 5551\n\nThis number is located in the lower-left section of the red banner, just above the social media links.!"
+    },
+    {
+      "question_id": 34703,
+      "prediction": "Yes, the text in the image is primarily in Arabic, which is a foreign language for many people, especially in the context of the Middle East and North Africa. The text is also in a mix of Arabic and English, with some English words like \"Facebook\" and \"Yahoo\" visible.!"
+    },
+    {
+      "question_id": 34704,
+      "prediction": "Based on the information visible on the billboard, the event is being produced by **KK Dheeraj**.\n\nThis is indicated by the text at the bottom right of the poster, which reads:\n`PRODUSER KK DHEERAJ`!"
+    },
+    {
+      "question_id": 34705,
+      "prediction": "Based on the image provided, the year written on the bottom of the billboard is **2011**.\n\nThis is visible in the text that reads \"6 Okt. 2011\" on the lower right side of the advertisement.!"
+    },
+    {
+      "question_id": 34706,
+      "prediction": "Based on the image provided, the digital clock on the building's facade displays the time.\n\nThe time shown on the clock is **15:08:25**.!"
+    },
+    {
+      "question_id": 34707,
+      "prediction": "Based on the image provided, the red symbol indicates the wine's **juiciness**.\n\nThis is shown by the label directly below the red symbol, which reads \"juicy\". The red symbol is the third from the left in the row of icons, and it is positioned next to the bottle of wine that has a blue and white label.!"
+    },
+    {
+      "question_id": 34708,
+      "prediction": "Based on the text in the image, the name of the shop selling these wines is **Best Cellars**.\n\nThis is clearly visible in the large purple text at the top of the advertisement. The logo also features a stylized \"B\" inside a purple circle.!"
+    },
+    {
+      "question_id": 34709,
+      "prediction": "Based on the image provided, the text written on the black plastic bag is:\n\n**TPM**\n\nThe letters are in a light blue or cyan color and are arranged in a stylized, somewhat cursive font. The letters are \"T\", \"P\", and \"M\".!"
+    },
+    {
+      "question_id": 34710,
+      "prediction": "Based on the text visible on the product packaging in the image, the name of the product is **Gum Plus™**.\n\nThis is clearly written in large white letters on the black box. The brand name \"Just Mobile\" is also visible at the top of the box.!"
+    },
+    {
+      "question_id": 34711,
+      "prediction": "Based on the image provided, the trademarked item is **Gum Plus™**.\n\nThis is clearly visible on the product box, which is the packaging for the \"Just Mobile Gum Plus\" device. The trademark symbol (™) is also present next to the name \"Gum Plus\".!"
+    },
+    {
+      "question_id": 34712,
+      "prediction": "Based on the image provided, yes, the building in the center of the photograph is the **CNN Building**.\n\nHere are the key details that confirm this:\n\n- **The Sign:** The most prominent feature is the large red sign on the top of the building that clearly reads \"CNN\" in white letters.\n- **The Building's Design:** The building has a modern, angular design with a combination of glass and concrete. The structure is a significant example of contemporary architecture in New York City.\n- **Location:** The building is located in the Financial District of Manhattan, specifically at 1000 5th Avenue, which is a well-known address for the CNN building.\n\nThe CNN Building is a notable landmark in New York City, and the image captures it on a sunny day with other city buildings in the background.!"
+    },
+    {
+      "question_id": 34713,
+      "prediction": "Based on the image provided, the name written on the patch is **Clemson**.\n\nThe patch is a white, rectangular embroidered item with a blue border, placed on a black laptop keyboard. The name is written in a black, cursive font.!"
+    },
+    {
+      "question_id": 34714,
+      "prediction": "Based on the image provided, the book is on page 78. This is indicated by the number \"78\" printed in the upper left corner of the page.!"
+    },
+    {
+      "question_id": 34715,
+      "prediction": "dahin!"
+    },
+    {
+      "question_id": 34716,
+      "prediction": "Based on the text visible on the book cover, the author is **Renaud Camus**.\n\nThis is clearly stated at the top of the cover. The title of the book is \"Révoltez-vous !\", and the publisher is \"Chez l'auteur\", which means \"At the author\" in French.!"
+    },
+    {
+      "question_id": 34717,
+      "prediction": "Based on the image provided, the title of the book is **\"Révoltez-vous !\"**.\n\nThis is the most prominent text on the cover, written in large, red, uppercase letters. The author's name, **Renaud Camus**, is printed at the top in white. The phrase \"Chez l'auteur\" (meaning \"At the author's house\" or \"By the author\") is at the bottom.!"
+    },
+    {
+      "question_id": 34718,
+      "prediction": "Based on the image provided, the footballer is **Mario Balotelli**.\n\nHe is an Italian professional footballer who plays for the Italian club **Juventus**.\n\nThe jersey he is wearing is the iconic black and white striped kit of **Juventus**, which is the club he plays for. The sponsor on the jersey is **New Holland**, a Dutch company, but the club itself is Italian.!"
+    },
+    {
+      "question_id": 34719,
+      "prediction": "Based on the image provided, the text above the heart symbol on the side of the pedicab reads:\n\n**Matsuzakaya**!"
+    },
+    {
+      "question_id": 34720,
+      "prediction": "Based on the text on the cover of the album, this is a recording of a specific musical work.\n\nThe book is about the **Brahms Klavierkonzert Nr. 1** (Brahms Piano Concerto No. 1), performed by **Claudio Arrau** with the **Concertgebouw-Orchester Amsterdam** under the direction of **Bernard Haitink**.\n\nThe cover also features the **Philips** logo, indicating the record label.!"
+    },
+    {
+      "question_id": 34721,
+      "prediction": "Based on the text on the cover of the album, the title is:\n\n**Brahms Klavierkonzert Nr. 1**\n\nThis is the title of the piece being performed, which is the first piano concerto by Johannes Brahms. The album is a recording of this piece by the Claudio Arrau, performed with the Concertgebouw Orchestra in Amsterdam.!"
+    },
+    {
+      "question_id": 34722,
+      "prediction": "Based on the image provided, the mug has a design with three stylized letters that spell out a word.\n\nThe letters are:\n- A large, black letter 'M' with a red outline.\n- A yellow letter 'U' with a black outline and white stars.\n- A blue letter 'C' with a black outline and a snake-like design.\n\nThe letters are arranged in a row, and the text on the mug is:\n\n**MUC**\n\nThis is a common abbreviation for \"MUC,\" which can stand for various things depending on the context, such as:\n- **MUC (Municipal Utility Company)**: A company that provides utilities to a city or town.\n- **MUC (Municipal Utility Company)**: A company that provides utilities to a city or town.\n- **MUC (Municipal Utility Company)**: A company that provides utilities to a city or town.\n\nThe most likely interpretation of the text on the mug is **MUC**, which is a common abbreviation for \"Municipal Utility Company\" or \"MUC\" as a brand name.!"
+    },
+    {
+      "question_id": 34723,
+      "prediction": "Based on the image provided, the shape seen through the handle of the mug is a **star**.\n\nMore specifically, the pattern consists of several white, five-pointed stars on a black background. The stars are arranged in a circular pattern, with the handle of the mug positioned in the center of this pattern.!"
+    },
+    {
+      "question_id": 34724,
+      "prediction": "Based on the image provided, the word on the left middle button of the calculator is **MC**.\n\nThis is the \"Memory Clear\" function, which is used to clear the current memory value stored in the calculator.!"
+    },
+    {
+      "question_id": 34725,
+      "prediction": "Based on the image provided, the button on the bottom left of the calculator is the **0** key.\n\nThis is the **zero** key, which is used to enter the number zero into calculations. It is located in the bottom row of the calculator's keypad, to the left of the \"ON/C\" button.!"
+    },
+    {
+      "question_id": 34726,
+      "prediction": "Based on the information on the book cover, the gallery is **116 Blue Star**.\n\nThis is clearly written on the cover, just below the title \"SOUL DOUBT\".!"
+    },
+    {
+      "question_id": 34727,
+      "prediction": "Based on the text visible on the album cover in the image, the name of the band is **Soul Doubt**.\n\nThis is clearly printed in large, white letters on the blue background of the cover. The name is also visible on the top of the album sleeve.!"
+    },
+    {
+      "question_id": 34728,
+      "prediction": "Based on the sign visible in the image, it says \"OPEN SOON\".!"
+    },
+    {
+      "question_id": 34729,
+      "prediction": "Based on the sign visible in the image, the establishment sells **smoothies**.\n\nThe sign clearly reads \"SMOOTHIES\" and also includes the text \"NEW ORLEANS ORIGINAL\" and \"OPEN SOON\". This indicates that the business is a smoothie shop located in New Orleans.!"
+    },
+    {
+      "question_id": 34730,
+      "prediction": "Based on the image provided, the license plate number of the yellow van is **AJS2 UYV**.\n\nThis is visible on the front of the vehicle, below the grille.!"
+    },
+    {
+      "question_id": 34731,
+      "prediction": "Based on the text visible on the yellow van, the company that operates it is **EuroMaster**.\n\nThis is clearly indicated by the large \"EUROMASTER\" logo on the side of the van, along with the \"ATS\" logo on the roof and the front of the vehicle. The van is also branded with \"ATS MOBILE TYRE FITTING SERVICE\" on the side.\n\nThe van is a Ford Transit, and the license plate is AJ52 UYV.!"
+    },
+    {
+      "question_id": 34732,
+      "prediction": "Based on the image provided, the code on the side of the airplane is **PH-SMA**.\n\nThis code is located on the side of the fuselage, just behind the cockpit, and is written in red letters.!"
+    },
+    {
+      "question_id": 34733,
+      "prediction": "Based on the image provided, the phrase right below the cockpit is \"PH-SMA\". The first word of this phrase is **PH**.!"
+    },
+    {
+      "question_id": 34734,
+      "prediction": "Based on the image provided, the heading in red is:\n\n**London underground, blogspot.com**!"
+    },
+    {
+      "question_id": 34735,
+      "prediction": "Based on the image provided, the first website name listed on the page is:\n\n**london-underground.blogspot.com**!"
+    },
+    {
+      "question_id": 34736,
+      "prediction": "Based on the image provided, the text on the red wall reads:\n\n**\"VAAM MUST SURVIVE IN BERLIN CITY\"**\n\nThe phrase \"VAAM\" is the Dutch word for \"I\" or \"me,\" and \"MUST SURVIVE\" is the main message. Therefore, the answer is:\n\n**VAAM must survive in Berlin City.**!"
+    },
+    {
+      "question_id": 34737,
+      "prediction": "Based on the text visible on the red sign in the image, the bar being advertised is a **Winter Bar**.\n\nThe sign clearly reads:\n- \"WINTER BAR\"\n- \"VAAM MUST SURVIVE IN BERLIN CITY\"!"
+    },
+    {
+      "question_id": 34738,
+      "prediction": "Based on the image provided, the word printed under \"INTERIOR DESIGN\" on the book in the middle is **INSPIRATIONS**.\n\nThis is visible on the cover of the book titled \"INTERIOR DESIGN INSPIRATIONS\" by the publisher \"Champoir & Famille\".!"
+    },
+    {
+      "question_id": 34739,
+      "prediction": "Based on the image provided, the magazine in the bottom middle is **mōi dom**.\n\nHere are the details:\n- The title is written in large, yellow and white letters.\n- The price is listed as 1,630.\n- The magazine is published by **Mōi Dom**.\n- The cover features a white chair and a glass object.!"
+    },
+    {
+      "question_id": 34740,
+      "prediction": "Based on the information visible on the bottle's label, the brand of the beer is **George Beer**.\n\nThe label clearly shows the name \"George Beer\" in English, along with the Georgian script \"გეორგის ბერი\" (Georgi's Beer). The label also indicates it is a \"PREMIUM LAGER BEER\" and was established in 1915.!"
+    },
+    {
+      "question_id": 34741,
+      "prediction": "Based on the image provided, the typewriter brand is **Adelbert Underwood**.\n\nThis is clearly visible on the front of the typewriter, printed in a dark, elegant font on the light blue casing. The brand name is also visible on the paper that is being typed.!"
+    },
+    {
+      "question_id": 34742,
+      "prediction": "Based on the text and imagery on the shop's sign, it is a **fancy dress and novelty shop**.\n\nHere are the key details from the sign that support this:\n\n-   **Main Name:** The large yellow sign prominently displays \"FANCY DRESS JOKE SHOP\".\n-   **Sub-Category:** The sign also lists \"JOKES - NOVELTY FANCY DRESS\" as a category.\n-   **Themes:** The shop has a strong theme for Halloween, as indicated by the \"Halloween\" section of the sign and the display of various masks and costumes.\n-   **Special Offer:** The sign mentions \"FIREWORKS\" and \"FANCY DRESS\" as part of the shop's offerings.\n\nTherefore, it is a shop that sells costumes, novelty items, and jokes, with a focus on Halloween and fancy dress.!"
+    },
+    {
+      "question_id": 34743,
+      "prediction": "Based on the sign in the image, the store sells fireworks for **Halloween**.\n\nThe sign on the right side of the storefront, which is dedicated to fireworks, clearly displays the word \"HALLOWEEN\" in large letters.!"
+    },
+    {
+      "question_id": 34744,
+      "prediction": "Based on the information displayed on the Metra train board in the image, the current time is **5:35 PM**.\n\nThis time is shown in two places:\n- The red text at the top of the screen says \"5:35 PM\".\n- The yellow text at the bottom of the screen also says \"5:35 PM\".!"
+    },
+    {
+      "question_id": 34745,
+      "prediction": "Based on the information displayed on the Metra electronic sign in the image, Waukegan was moved to **Track 12**.\n\nThe sign shows the following:\n- **5:43 PM** Waukegan **MOVED TO TRACK 12**\n- The time is also listed as **5:35 PM** on the same line, which is the time the train was on the new track.\n- The destination is **KENOSHA**.!"
+    },
+    {
+      "question_id": 34746,
+      "prediction": "Based on the text visible in the image, the event is on **The Pentagon Channel**.\n\nThis is indicated by the large yellow text on the black background in the upper portion of the image. The text reads \"TPC\" and below it, \"The Pentagon Channel\".!"
+    },
+    {
+      "question_id": 34747,
+      "prediction": "Based on the visual evidence in the image, the men are in the **U.S. Army**.\n\nThis is indicated by the text on the back of the referee's black jacket, which clearly reads \"ARMY\" in yellow letters. The setting, which appears to be a boxing ring with a \"The Pentagon Channel\" sign in the background, further suggests a military context. The presence of a U.S. Army referee and the \"Army\" logo on the uniform are the most direct clues.!"
+    },
+    {
+      "question_id": 34748,
+      "prediction": "Based on the image provided, the \"核心價值\" (Core Values) section lists the following values:\n\n- 希望建立名聲 (Hope to establish a name)\n- 嚴格要求 (Strict requirements)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacrifice)\n- 奉獻 (Sacr"
+    },
+    {
+      "question_id": 34749,
+      "prediction": "Based on the image provided, the bookmark is asking the following question:\n\n**Do You Want to Study in the U.S.A.?**\n\nThis is a common question used in educational contexts, particularly for students considering studying abroad. The bookmark is placed on a book, likely a textbook or a study guide, and is designed to be a visual aid for students.!"
+    },
+    {
+      "question_id": 34750,
+      "prediction": "Based on the image provided, the acronym **PWM** stands for **Pulse Width Modulation**.\n\nThis is clearly written on the whiteboard, along with the formula:\n`PWM = Pulse Width Modulation`\n\nPulse Width Modulation is a technique used in electronics and signal processing to encode information by varying the width of a pulse, rather than its frequency or amplitude. It is commonly used in applications like:\n- **Motor control** (e.g., in electric vehicles and drones)\n- **Audio and video signal processing**\n- **Power supply regulation**\n- **Digital communication**!"
+    },
+    {
+      "question_id": 34751,
+      "prediction": "Based on the image provided, the top word circled below the graph is **PWM**.\n\nThis is the abbreviation for **Pulse Width Modulation**, which is the concept being explained on the whiteboard. The diagram shows a waveform with a series of pulses of different widths, and the text \"PWM = Pulse Width Modulation\" is written above the graph.!"
+    }
+  ]
+}

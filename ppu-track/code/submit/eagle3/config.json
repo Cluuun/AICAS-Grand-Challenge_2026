@@ -1,0 +1,45 @@
+{
+  "architectures": [
+    "Eagle3LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "draft_vocab_size": 32000,
+  "dtype": "bfloat16",
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "image_token_id": 151655,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 262144,
+  "mlp_bias": false,
+  "modal_type": "VLM",
+  "model_type": "llama",
+  "num_attention_heads": 16,
+  "num_hidden_layers": 1,
+  "num_key_value_heads": 8,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": {
+    "mrope_interleaved": true,
+    "mrope_section": [
+      24,
+      20,
+      20
+    ],
+    "rope_type": "default",
+    "type": "default"
+  },
+  "rope_theta": 5000000,
+  "target_model_type": "qwen3_vl",
+  "tie_word_embeddings": true,
+  "transformers_version": "4.57.3",
+  "use_cache": true,
+  "video_token_id": 151656,
+  "vision_end_token_id": 151653,
+  "vision_start_token_id": 151652,
+  "vocab_size": 151936
+}

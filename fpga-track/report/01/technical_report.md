@@ -1,0 +1,185 @@
+# AICAS 2026 FPGA 赛道技术报告
+
+## 1. 系统概述
+
+本方案在 KV260 上部署 SmolVLM2-500M-Video-Instruct，采用 MNN 推理运行时和直接 PS-PL 加速路径。软件层保持标准 Linux 用户态模型服务流程，PL overlay 提供轻量 AXI-Lite/CMA runtime，用于承接 MNN 中选定的大尺寸 linear 任务。
+
+最终实测配置由四类优化组成：
+
+1. 使用 MNN 模型与 runtime，提高 CPU 侧 prefill 吞吐量。
+2. 引入 prefix-delta KV cache，减少基准测试中重复 prompt/prefix 的计算。
+3. 构建 headless 低功耗 KV260 Linux 镜像，并配合运行时服务裁剪。
+4. 使用 SDF5 PL real replace，对选定大尺寸 linear 任务进行真实 PL 替换，并在 profile 中记录替换次数。
+
+最终稳定测量配置为：
+
+```text
+prefix-delta cache + SDF5 PL real replace
+PL allowlist shape: 1024x64x1024
+PL replace limit: 8
+```
+
+## 2. 推理运行时
+
+### 2.1 MNN 执行路径
+
+SmolVLM2 模型被转换为 MNN graph/weight 文件，由 `aicas_mnn_server` 加载。server 提供 OpenAI-compatible HTTP 接口，供 AICAS 指标脚本调用。MNN 内部使用 CPU backend 执行 VLM 图结构。本项目在 MNN runtime 中增加：
+
+- 请求级 profiling 字段；
+- PL status、metrics 和 self-test 接口；
+- 选定 linear 任务的 sidecar/replace hook；
+- 最终指标测试使用的 prefix-delta cache 控制。
+
+选择 MNN 作为主路线的原因是：板端实测显示，MNN 在 prefill 吞吐量和 TTFT 上相对原始 baseline 有明显优势。转换后的 MNN 静态图直接面向 MNN backend 执行，减少了请求阶段 GGUF/mmproj 通用路径带来的额外开销。
+
+### 2.2 Prefix-Delta Cache
+
+比赛中的 throughput、energy、TTFT 测试会重复使用相似图像和 prompt 结构。prefix-delta cache 保存可复用的 prefix/KV 状态，使后续请求不再完整重算共享前缀。该优化直接改善 TTFT 和吞吐量，并且可以和 PL replace 同时启用。
+
+### 2.3 PL Replace 策略
+
+PL 加速采用选择性替换。前期完整替换和 shadow-only 实验表明，如果把过多小算子提交给 PL，量化、pack、dequant、轮询和 sidecar 调度开销会抵消硬件计算收益。最终策略只提交少量足够大的稳定 linear 任务：
+
+```text
+shape = 1024x64x1024
+limit = 8
+```
+
+这样既保持 MNN CPU decode 路径的稳定性，又满足真实 PL 参与，并避免过多 per-op sidecar 开销。
+
+## 3. PL 加速器
+
+### 3.1 硬件接口
+
+SDF5 overlay 采用 direct-runtime PS-PL 流程：
+
+- FPGA Manager 加载 `system.bit.bin`；
+- configfs 加载 `pl_sdf5_kvfit_kv260_uio_only.dtbo`；
+- `generic-uio` 暴露 AXI-Lite 控制寄存器窗口；
+- CMA helper 提供物理连续缓冲区；
+- PL AXI master 通过 KV260 HP 端口访问 PS DDR。
+
+host runtime 会通过 `/sys/class/uio/uio*/maps/map0/addr` 判断实际 UIO 设备，而不是假设固定 `/dev/uioN`。
+
+### 3.2 任务执行过程
+
+对于每个被 allowlist 接收的任务，host 侧准备 activation 和 weight buffer，写入 SDF descriptor 与控制寄存器，启动加速器，等待完成后读取输出。runtime 同时记录提交形状和 replace 计数。稳定提交配置使用 PL 输出参与推理，因此属于真实 replace 模式。
+
+### 3.3 选择性替换的工程原因
+
+KV260 的 BRAM/URAM 无法常驻完整模型层权重或完整 KV cache。本方案采用 streaming 和小规模 local buffer，而不是 full-layer cache。板端 profiling 同时显示，频繁提交小任务会增加 CPU 调度和功耗开销。因此最终方案将 PL 用在足够大、能摊薄运行时开销的任务上。
+
+## 4. PS 与 Linux 侧优化
+
+### 4.1 Headless 低功耗镜像
+
+实测 PetaLinux 镜像通过 device tree 禁用未使用功能：
+
+```text
+display = disabled
+dpdma   = disabled
+usb0    = disabled
+dwc3_0  = disabled
+can0    = disabled
+can1    = disabled
+```
+
+推理前稳定 headless idle 功耗在 2.75-2.85 W 区间。运行时进一步裁剪 NFS/RPC、额外 timer、非必要 getty 等服务。以太网速率和 CPU hotplug 实验表明，这类系统级调节只带来较小功耗变化，因此最终优化重点放在推理耗时、prefix-delta cache 和 PL replace 开销上。
+
+### 4.2 MMC 映射
+
+实测镜像根文件系统为：
+
+```text
+/dev/mmcblk1p2
+```
+
+启动配置中带有 `rootwait` 和已验证 rootfs 映射。若在其他 KV260 启动环境中手动修改 bootargs，应先通过串口确认 SD/eMMC 编号。
+
+## 5. Profiling 与指标优化
+
+### 5.1 Profiling 信号
+
+优化过程使用以下观测手段：
+
+- MNN request profile 与 PL replace counters；
+- shape allowlist 与 replace-count 汇总；
+- AICAS throughput、energy、TTFT 指标脚本；
+- INA260 板级功耗采样；
+- idle、service、network、cpuidle 功耗实验；
+- 板端 PL self-test 和 SDF shape probe。
+
+这些数据明确了主要分数取舍：MNN CPU 路径已经有较强 prefill 和 TTFT 表现，过宽的 PL 替换会影响 decode 稳定性。因此最终配置保留 CPU decode 的主要路径，只让 PL 承接受控的大尺寸 linear 任务。
+
+### 5.2 AICAS 指标结果
+
+最终稳定实测结果：
+
+| 指标 | 实测值 |
+|---|---:|
+| Prefill 吞吐量 | 29.9060 token/s |
+| Decode 吞吐量 | 7.0307 token/s |
+| 能效比 | 1.5959 token/J |
+| TTFT 斜率 | 6.5651 ms/char |
+| TTFT 截距 | 17337.93 ms |
+
+相对官方 baseline 的提升率：
+
+| 指标 | 提升率 |
+|---|---:|
+| Prefill | 0.899351 |
+| Decode | 0.210607 |
+| Energy | 0.392190 |
+| TTFT | 0.565916 |
+
+线上分数估计：
+
+```text
+47.38926894600879
+```
+
+## 6. 复现流程
+
+1. 将单独提交的低功耗 KV260 `.wic` 镜像写入 SD 卡。
+2. 启动板卡并登录 `ubuntu` 用户。
+3. 将本提交包复制到板端。
+4. 加载 SDF5 PL overlay：
+
+```bash
+sudo bash source/scripts/kv260_load_sdf5_configfs_safe.sh \
+  hardware/sdf5_kv260/system.bit.bin \
+  hardware/sdf5_kv260/pl_sdf5_kvfit_kv260_uio_only.dtbo
+```
+
+5. 启动 `aicas_mnn_server`，并启用 MNN 动态库与 PL replace：
+
+```bash
+export LD_LIBRARY_PATH=/home/ubuntu/aicas/mnn_cacheexp_20260601/lib:$LD_LIBRARY_PATH
+export AICAS_PL_ENABLE=1
+export AICAS_PL_MODE=replace
+export AICAS_PL_REPLACE_LIMIT=8
+export AICAS_PL_ALLOW_SHAPES=1024x64x1024
+```
+
+6. 从以下目录运行 AICAS MNN 指标脚本：
+
+```text
+source/aicas_semi/code/
+```
+
+7. 使用最终 JSON：
+
+```text
+results/aicas_submission_prefix_delta_pl8_retest_20260607.json
+```
+
+## 7. 源码组成
+
+本提交包包含：
+
+- SDF5 FPGA 加速器源码、仿真文件、板端测试和 Vivado Tcl；
+- MNN server/runtime 的 PL 接入与 profiling 修改；
+- 适配 MNN 的 AICAS 指标脚本；
+- KV260 部署与 profiling 辅助脚本。
+
+这些文件可复现实测 JSON 所使用的优化推理路径。

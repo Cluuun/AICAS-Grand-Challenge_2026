@@ -1,0 +1,13 @@
+{
+  "kind": "pure_lowrank",
+  "rank": 128,
+  "source_layer": 18,
+  "target_layer": 23,
+  "ridge": 0.0001,
+  "ridge_lambda": 0.003954091262817383,
+  "rms_regression": {
+    "w": 1.0372612476348877,
+    "b": 21.795516967773438,
+    "source_target_corr": 0.21648065745830536
+  }
+}
